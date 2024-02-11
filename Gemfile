@@ -52,7 +52,8 @@ gem 'slim-rails'
 # Use Devise for authentication
 gem 'devise', '~> 4.9.3'
 
-gem 'loggable_activity', '~> 0.1.3', path: '/Users/maxgronlund/Documents/Max/open-source/LoggableActivity'
+# gem 'loggable_activity', '~> 0.1.34', path: '/Users/maxgronlund/Documents/Max/open-source/LoggableActivity'
+gem 'loggable_activity', '~> 0.1.36'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
