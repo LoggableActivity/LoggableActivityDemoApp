@@ -1702,3 +1702,429 @@ Completed 200 OK in 18ms (Views: 13.9ms | ActiveRecord: 0.0ms | Allocations: 312
   Rendering home/index.html.slim
   Rendered home/index.html.slim (Duration: 0.1ms | Allocations: 177)
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (26.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "activity_logger_test"[0m
+  [1m[35m (49.8ms)[0m  [1m[35mCREATE DATABASE "activity_logger_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "demo_addresses" CASCADE[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "demo_addresses" ("id" bigserial primary key, "street" character varying, "city" character varying, "country" character varying, "postal_code" character varying)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "demo_clubs" CASCADE[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "demo_clubs" ("id" bigserial primary key, "name" character varying, "demo_address_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "demo_journals" CASCADE[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "demo_journals" ("id" bigserial primary key, "title" character varying, "body" text, "state" integer DEFAULT 0, "patient_id" bigint, "doctor_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_demo_journals_on_doctor_id" ON "demo_journals" ("doctor_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_demo_journals_on_patient_id" ON "demo_journals" ("patient_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "demo_user_profiles" CASCADE[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "demo_user_profiles" ("id" bigserial primary key, "sex" character varying, "religion" character varying, "user_id" bigint)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_demo_user_profiles_on_user_id" ON "demo_user_profiles" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "loggable_activities" CASCADE[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "loggable_activities" ("id" bigserial primary key, "action" character varying, "actor_type" character varying, "actor_id" bigint, "encrypted_actor_display_name" character varying, "encrypted_record_display_name" character varying, "record_type" character varying, "record_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_loggable_activities_on_actor" ON "loggable_activities" ("actor_type", "actor_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_loggable_activities_on_record" ON "loggable_activities" ("record_type", "record_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "loggable_encryption_keys" CASCADE[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "loggable_encryption_keys" ("id" bigserial primary key, "parrent_key_id" bigint, "key" character varying, "record_type" character varying, "record_id" bigint)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_loggable_encryption_keys_on_parrent_key_id" ON "loggable_encryption_keys" ("parrent_key_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_loggable_encryption_keys_on_record" ON "loggable_encryption_keys" ("record_type", "record_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "loggable_payloads" CASCADE[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "loggable_payloads" ("id" bigserial primary key, "record_type" character varying, "record_id" bigint, "encrypted_attrs" json, "payload_type" integer DEFAULT 0, "data_owner" boolean DEFAULT FALSE, "activity_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_loggable_payloads_on_activity_id" ON "loggable_payloads" ("activity_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_loggable_payloads_on_record" ON "loggable_payloads" ("record_type", "record_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "demo_address_id" integer, "first_name" character varying, "last_name" character varying, "age" integer, "bio" text, "user_type" integer DEFAULT 0, "demo_club_id" integer)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "demo_clubs" ADD CONSTRAINT "fk_rails_dd079fcb4d"
+FOREIGN KEY ("demo_address_id")
+  REFERENCES "demo_addresses" ("id")
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "demo_journals" ADD CONSTRAINT "fk_rails_7d3eed2e94"
+FOREIGN KEY ("doctor_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "demo_journals" ADD CONSTRAINT "fk_rails_d06df098f9"
+FOREIGN KEY ("patient_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "demo_user_profiles" ADD CONSTRAINT "fk_rails_6bf0522cea"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "loggable_encryption_keys" ADD CONSTRAINT "fk_rails_82b854fad2"
+FOREIGN KEY ("parrent_key_id")
+  REFERENCES "loggable_encryption_keys" ("id")
+ ON DELETE SET NULL[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "loggable_payloads" ADD CONSTRAINT "fk_rails_e441a2ac11"
+FOREIGN KEY ("activity_id")
+  REFERENCES "loggable_activities" ("id")
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD CONSTRAINT "fk_rails_1c2a3c01c8"
+FOREIGN KEY ("demo_address_id")
+  REFERENCES "demo_addresses" ("id")
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD CONSTRAINT "fk_rails_32ff4ebbd0"
+FOREIGN KEY ("demo_club_id")
+  REFERENCES "demo_clubs" ("id")
+[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20240210124006)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20240210123906),
+(20240210123806),
+(20240201114259),
+(20240126073126),
+(20240115092918),
+(20240115092855),
+(20240115092608),
+(20240105121825),
+(20240105115248),
+(20240105115132),
+(20240104094810);[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'test', '2024-02-11 12:42:13.237377', '2024-02-11 12:42:13.237380') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '333fc3fc0a9dcf176047740a5e52cf9c32171ec1', '2024-02-11 12:42:13.237967', '2024-02-11 12:42:13.237968') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (4.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user1@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user1@example.com"], ["encrypted_password", "$2a$04$suKEVpAuq.djKUzhsyFuMuknlopGwvxypNcOK2u4bLMwVAajmCjnO"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.327096"], ["updated_at", "2024-02-11 12:42:13.327096"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user2@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user2@example.com"], ["encrypted_password", "$2a$04$P1DQkKt9GWcm1OCX/Sm1ZutU5NFC4ZDc6Hh190rgm5CwcWLJbFPeK"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.330827"], ["updated_at", "2024-02-11 12:42:13.330827"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user3@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user3@example.com"], ["encrypted_password", "$2a$04$d5RZ3gPlYpy35aS/3GR2gOzy9ObltzXAAE6T5CP1NLFrzNO3pmvOq"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.337442"], ["updated_at", "2024-02-11 12:42:13.337442"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.4ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "4b2b4381063220d884f6d209682ef1fb"], ["record_type", "User"], ["record_id", 3]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user4@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user4@example.com"], ["encrypted_password", "$2a$04$/AGcYhh93jDR9F3qNTrGX.8yAczhGb1qkaOyf5fiXH0Ei1cfPh1/W"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.343950"], ["updated_at", "2024-02-11 12:42:13.343950"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 1], ["key", "ae120a2049131ea88e9d1b211c7688b7"], ["record_type", "User"], ["record_id", 4]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Update (0.4ms)[0m  [1m[33mUPDATE "loggable_encryption_keys" SET "key" = $1 WHERE "loggable_encryption_keys"."id" = $2[0m  [["key", nil], ["id", 2]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Update (0.3ms)[0m  [1m[33mUPDATE "loggable_encryption_keys" SET "key" = $1 WHERE "loggable_encryption_keys"."id" = $2[0m  [["key", nil], ["id", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.0ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user5@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user5@example.com"], ["encrypted_password", "$2a$04$cT5CVfEArxSMYn06..sOwuCsN0MAEiUdNl6scVcQhyq3MtFMLQzKC"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.365616"], ["updated_at", "2024-02-11 12:42:13.365616"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.1ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "952606118afefbe698793dd12f69a271"], ["record_type", "User"], ["record_id", 5]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user6@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user6@example.com"], ["encrypted_password", "$2a$04$U4dULfGtQf6yCWJJJFB.7.u/r5VHtmKC8YFmzGDECMuwVCkA9t.KC"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.374494"], ["updated_at", "2024-02-11 12:42:13.374494"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."record_type" = $1 AND "loggable_encryption_keys"."record_id" = $2 LIMIT $3[0m  [["record_type", "User"], ["record_id", 6], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 3], ["key", "cf7b45f93fbd694a9c195b17bb8e9b8d"], ["record_type", "User"], ["record_id", 6]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDemo::Address Create (0.4ms)[0m  [1m[32mINSERT INTO "demo_addresses" ("street", "city", "country", "postal_code") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["street", "MyString"], ["city", "MyString"], ["country", "MyString"], ["postal_code", "MyString"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user7@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user7@example.com"], ["encrypted_password", "$2a$04$KqbrZUz/ZWoe1GUnM5usDeB19K8uYMWvU288VV6IBNgfLcMegORpi"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.405928"], ["updated_at", "2024-02-11 12:42:13.405928"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.1ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "caa137d9d9a4a142dd7389920a52f78a"], ["record_type", "User"], ["record_id", 7]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."record_type" = $1 AND "loggable_encryption_keys"."record_id" = $2 LIMIT $3[0m  [["record_type", "Demo::Address"], ["record_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.1ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 5], ["key", "4e920c9582e04cca7316ffe0c5100cb6"], ["record_type", "Demo::Address"], ["record_id", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mDemo::Address Load (0.0ms)[0m  [1m[34mSELECT "demo_addresses".* FROM "demo_addresses" WHERE "demo_addresses"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.0ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDemo::Address Create (0.1ms)[0m  [1m[32mINSERT INTO "demo_addresses" ("street", "city", "country", "postal_code") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["street", "MyString"], ["city", "MyString"], ["country", "MyString"], ["postal_code", "MyString"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.1ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "83acbef0a23ea48f2df8bc7671bd9f3f"], ["record_type", "Demo::Address"], ["record_id", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user8@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user8@example.com"], ["encrypted_password", "$2a$04$JMQWedgM5jfhN2Mnui63HOm51HZ3/SwOrqQ3UbMpQMp.efyogx6Fi"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.410914"], ["updated_at", "2024-02-11 12:42:13.410914"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.0ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."record_type" = $1 AND "loggable_encryption_keys"."record_id" = $2 LIMIT $3[0m  [["record_type", "User"], ["record_id", 8], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.3ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 7], ["key", "38ff79c6117c7ae5df8743501a5364eb"], ["record_type", "User"], ["record_id", 8]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.0ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mDemo::Address Load (0.0ms)[0m  [1m[34mSELECT "demo_addresses".* FROM "demo_addresses" WHERE "demo_addresses"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user9@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user9@example.com"], ["encrypted_password", "$2a$04$tW5uicNXODJIvQBF6vmHWOLGaXTFDV2wKlrE3i32Oxc3wTFpZLtAu"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.415787"], ["updated_at", "2024-02-11 12:42:13.415787"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user11@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user11@example.com"], ["encrypted_password", "$2a$04$wOXT0CAgdPzpVyVlqCeRLum7Y/r2NmO8Z9kEBSlj.bGaBxmgcYMq2"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:42:13.419677"], ["updated_at", "2024-02-11 12:42:13.419677"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user13@example.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/home/index" for 127.0.0.1 at 2024-02-11 13:42:13 +0100
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.slim
+  Rendering home/index.html.slim within layouts/application
+  Rendered home/index.html.slim within layouts/application (Duration: 6.5ms | Allocations: 13650)
+  Rendered layouts/_navbar.html.slim (Duration: 1.8ms | Allocations: 6642)
+  Rendered layout layouts/application.html.slim (Duration: 11.0ms | Allocations: 27567)
+Completed 200 OK in 18ms (Views: 13.5ms | ActiveRecord: 0.0ms | Allocations: 31287)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  Rendering home/index.html.slim
+  Rendered home/index.html.slim (Duration: 0.2ms | Allocations: 445)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  Rendering home/index.html.slim
+  Rendered home/index.html.slim (Duration: 0.1ms | Allocations: 177)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user1@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user1@example.com"], ["encrypted_password", "$2a$04$tnuU3QyCqP7nLm3VxHQo0uMjgpod4qCb9PbX6cECksno8HMubhOmK"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.215667"], ["updated_at", "2024-02-11 12:43:20.215667"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user2@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user2@example.com"], ["encrypted_password", "$2a$04$YDyR3qNNl13nTdhQIpwa.eqs0/A33UE4AVdrXKFhsTsnPhmDqXRzi"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.228658"], ["updated_at", "2024-02-11 12:43:20.228658"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user3@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user3@example.com"], ["encrypted_password", "$2a$04$NC5jP4oYRyc7CyRpSZ2Y3ubgWcTFHvOL.gqbD/v2lfMI8tzr8iQj2"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.236423"], ["updated_at", "2024-02-11 12:43:20.236423"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.6ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "fa8aecfec90fc2397bbe47e628dbf5d9"], ["record_type", "User"], ["record_id", 13]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user4@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user4@example.com"], ["encrypted_password", "$2a$04$kp3/aimgywscA7I0vXXrU.9OSFjQcE796FrSZjN4VS0eZ0iYWnkja"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.244871"], ["updated_at", "2024-02-11 12:43:20.244871"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.6ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 9], ["key", "538e3a22ec631f862756578f18e6e9d2"], ["record_type", "User"], ["record_id", 14]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Update (0.4ms)[0m  [1m[33mUPDATE "loggable_encryption_keys" SET "key" = $1 WHERE "loggable_encryption_keys"."id" = $2[0m  [["key", nil], ["id", 10]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.2ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Update (0.3ms)[0m  [1m[33mUPDATE "loggable_encryption_keys" SET "key" = $1 WHERE "loggable_encryption_keys"."id" = $2[0m  [["key", nil], ["id", 9]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user5@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user5@example.com"], ["encrypted_password", "$2a$04$Dk77eyXtcbrZGcTfK6I4w.HyxEDRCn5PAofyucn5386T8SZ1d1bF."], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.252906"], ["updated_at", "2024-02-11 12:43:20.252906"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "f71a53ba4326954b41f2f9e1f5ed49c8"], ["record_type", "User"], ["record_id", 15]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user6@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user6@example.com"], ["encrypted_password", "$2a$04$aVfbXU5gdOXnMOd6.M01D.tIfy6/md24zA6XskJGo7HS63RGLcOgm"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.255598"], ["updated_at", "2024-02-11 12:43:20.255598"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.2ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."record_type" = $1 AND "loggable_encryption_keys"."record_id" = $2 LIMIT $3[0m  [["record_type", "User"], ["record_id", 16], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.5ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 11], ["key", "9057d810e7a8b3f473692286cd1fcc3d"], ["record_type", "User"], ["record_id", 16]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDemo::Address Create (0.7ms)[0m  [1m[32mINSERT INTO "demo_addresses" ("street", "city", "country", "postal_code") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["street", "MyString"], ["city", "MyString"], ["country", "MyString"], ["postal_code", "MyString"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user7@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user7@example.com"], ["encrypted_password", "$2a$04$MHLm8a/KhgZI3Du3A2S6S.99UhYNReHisTEUwbpN.nPgeEu1M3Z0e"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.268793"], ["updated_at", "2024-02-11 12:43:20.268793"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "54cf32b9f79070518b5bcdd74f80cb15"], ["record_type", "User"], ["record_id", 17]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."record_type" = $1 AND "loggable_encryption_keys"."record_id" = $2 LIMIT $3[0m  [["record_type", "Demo::Address"], ["record_id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 13], ["key", "dd265749f49f457392ad5254f5cd668f"], ["record_type", "Demo::Address"], ["record_id", 3]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mDemo::Address Load (0.3ms)[0m  [1m[34mSELECT "demo_addresses".* FROM "demo_addresses" WHERE "demo_addresses"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDemo::Address Create (0.2ms)[0m  [1m[32mINSERT INTO "demo_addresses" ("street", "city", "country", "postal_code") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["street", "MyString"], ["city", "MyString"], ["country", "MyString"], ["postal_code", "MyString"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", nil], ["key", "6be6a5f5f5a535f07cff46027890a14f"], ["record_type", "Demo::Address"], ["record_id", 4]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user8@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user8@example.com"], ["encrypted_password", "$2a$04$OSB71Hf4oxV0qx7LOwcFyOIq/DBeBd9fEe25VOWriBJ3dr58AOdMC"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.274691"], ["updated_at", "2024-02-11 12:43:20.274691"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."record_type" = $1 AND "loggable_encryption_keys"."record_id" = $2 LIMIT $3[0m  [["record_type", "User"], ["record_id", 18], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLoggableActivity::EncryptionKey Create (0.2ms)[0m  [1m[32mINSERT INTO "loggable_encryption_keys" ("parrent_key_id", "key", "record_type", "record_id") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["parrent_key_id", 15], ["key", "679d50e5cb9d71f314cdf8f65ed5da3e"], ["record_type", "User"], ["record_id", 18]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mLoggableActivity::EncryptionKey Load (0.1ms)[0m  [1m[34mSELECT "loggable_encryption_keys".* FROM "loggable_encryption_keys" WHERE "loggable_encryption_keys"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mDemo::Address Load (0.1ms)[0m  [1m[34mSELECT "demo_addresses".* FROM "demo_addresses" WHERE "demo_addresses"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user9@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user9@example.com"], ["encrypted_password", "$2a$04$T0RAN1bz.jiRRnwbGw8DxerIyjW6OrwC1s3l1I82D4S3OpH.7iQ2O"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.279385"], ["updated_at", "2024-02-11 12:43:20.279385"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user11@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "demo_address_id", "first_name", "last_name", "age", "bio", "user_type", "demo_club_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING "id"[0m  [["email", "user11@example.com"], ["encrypted_password", "$2a$04$IAW2WJyjJGX0dtmX2I2u4eYdEDf8IAtfLNVQ4y1srJhSpNe1HR5my"], ["reset_password_token", nil], ["reset_password_sent_at", nil], ["remember_created_at", nil], ["created_at", "2024-02-11 12:43:20.283548"], ["updated_at", "2024-02-11 12:43:20.283548"], ["demo_address_id", nil], ["first_name", nil], ["last_name", nil], ["age", nil], ["bio", nil], ["user_type", 0], ["demo_club_id", nil]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "user13@example.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/home/index" for 127.0.0.1 at 2024-02-11 13:43:20 +0100
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.slim
+  Rendering home/index.html.slim within layouts/application
+  Rendered home/index.html.slim within layouts/application (Duration: 5.6ms | Allocations: 13650)
+  Rendered layouts/_navbar.html.slim (Duration: 4.3ms | Allocations: 6642)
+  Rendered layout layouts/application.html.slim (Duration: 12.5ms | Allocations: 27567)
+Completed 200 OK in 19ms (Views: 14.6ms | ActiveRecord: 0.0ms | Allocations: 31288)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  Rendering home/index.html.slim
+  Rendered home/index.html.slim (Duration: 0.3ms | Allocations: 445)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  Rendering home/index.html.slim
+  Rendered home/index.html.slim (Duration: 0.1ms | Allocations: 177)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
