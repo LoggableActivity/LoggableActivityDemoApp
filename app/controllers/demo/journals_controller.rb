@@ -2,6 +2,7 @@
 
 module Demo
   class JournalsController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_demo_journal, only: %i[show edit update destroy]
     before_action :set_patients, only: %i[new create]
     before_action :set_doctors, only: %i[new edit update create]
