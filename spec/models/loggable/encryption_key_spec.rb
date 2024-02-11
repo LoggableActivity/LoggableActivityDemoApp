@@ -45,7 +45,6 @@ RSpec.describe LoggableActivity::EncryptionKey, type: :model do
 
   describe '.create_encryption_key' do
     it 'creates a new encryption key with a random key' do
-      
       address = create(:demo_address)
       parrent_key = create(:loggable_encryption_key, record: address)
       user = create(:user)
