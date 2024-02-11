@@ -1,11 +1,56 @@
-.container
-  - if user_signed_in?
-    p You are signed in as #{current_user.email}
-    = link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }
-  - else 
-    = link_to "Sign in", new_user_session_path
 
-  - if user_signed_in?
-    br/
-    .mt-2 = link_to 'Users', demo_users_path, class: 'btn btn-primary btn-sm'
-
+.container.mt-4
+  .p-5.mb-4.bg-body-tertiary.rounded-3
+    .container-fluid.py-4
+      h1.display-5.fw-bold Protect and secure the privacy of users
+      p.col-md-8.fs-4 LoggableActivity is a Ruby gem for Rails applications that records user activities and protects sensitive data.
+.container.mt-4
+  .row.row-cols-1.row-cols-md-3.g-4
+    .col
+      .card.h-100
+        .card-body 
+          h5.card-title Who did what and when?
+          | Supervisors and administrators can monitor and track how data are used and manipulated. Every time data in the database are at play, the LoggableActivity gem can record it, making it possible to track who did what and when.
+    .col
+      .card.h-100
+        .card-body 
+          h5.card-title Protect sensitive data
+          | The LoggableActivity gem is designed to protect and secure the privacy of data stored in the Activity Log. When a user requests deletion of their account, the LoggableActivity gem will remove sensitive data protected by GDPR from the Activity Log.
+    .col
+      .card.h-100
+        .card-body 
+          h5.card-title Log related data 
+          | When users interact with the system, the data in context often has many sources. You can log data from multiple relations in one go. It is easy to configure what to log and how records are related.
+.container.mt-4
+  h1.mt-3 Prepared for GDPR compliance 
+.container.mt-4
+  .row.row-cols-1.row-cols-md-3.g-4
+    .col
+      .card.h-100
+        .card-body 
+          h5.card-title Respecrt for user's privacy
+          | When a data owner request deletion of their account, the LoggableActivity gem will remove sensitive data protected by GDPR from the Activity Log. Even when the log contains data from multiple relations, it will make sure that the data is removed in a GDPR compliant way.
+    .col
+      .card.h-100
+        .card-body 
+          h5.card-title Try it out 
+          ul 
+            li Sign up 
+            li Show a user profile
+            li Go to the Activity Log
+    .col
+      .card.h-100
+        .card-body 
+          h5.card-title Download 
+          | Try this demo app on your local computer.
+          .mt-4
+            = link_to "Download from GitHub", "https://github.com/maxgronlund/LoggableActivityDemoApp", class: "btn btn-outline-secondary", target: "_blank"
+.container.mt-4
+  .row
+    .col
+      h3 Contact us
+      | If you have any questions or need help, please contact us at the clack channel
+      .mt-4 = link_to "LoggableActivity on Slack", "https://join.slack.com/t/loggableactivity/shared_invite/zt-2a3tvgv37-mGwjHJTrBXBH2srXFRRSXQ", class: "btn btn-outline-secondary", target: "_blank"
+    .col
+      h3.mt-4 Integrate it in your Rails application
+      .mt-4 = link_to "loggable_activity on rubygems.org", "https://rubygems.org/gems/loggable_activity", class: "btn btn-outline-secondary", target: "_blank"
