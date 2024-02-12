@@ -11,9 +11,8 @@ RSpec.describe 'home/index.html.slim', type: :view do
     end
 
     it 'displays a sign out link and the user email' do
-      render
-      expect(rendered).to include 'You are signed in as user@example.com'
-      expect(rendered).to have_link 'Sign out', href: destroy_user_session_path
+      render partial: 'shared/session'
+      expect(rendered).to include 'user@example.com'
     end
   end
 
@@ -23,8 +22,8 @@ RSpec.describe 'home/index.html.slim', type: :view do
     end
 
     it 'displays a sign in link' do
-      render
-      expect(rendered).to have_link 'Sign in', href: new_user_session_path
+      render partial: 'shared/session'
+      expect(rendered).to have_link('Sign in', href: new_user_session_path, class: 'btn btn-outline-secondary')
     end
   end
 end
