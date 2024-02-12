@@ -9,16 +9,8 @@ html data-bs-theme="dark"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   body
-    .container 
-      = render 'layouts/navbar'
-    .container.mt-4
-      .d-flex.justify-content-end.mt-2
-        - if user_signed_in?
-          = current_user.email
-          '&nbsp; 
-          = link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }
-        - else 
-          = link_to "Sign in", new_user_session_path, class: "btn btn-outline-secondary"
+    = render 'layouts/navbar'
+    = render partial: 'shared/session'
     .container
       - if notice.present?
         p.alert.alert-info.mt-2 = notice
