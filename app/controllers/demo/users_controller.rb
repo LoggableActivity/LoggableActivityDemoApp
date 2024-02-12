@@ -13,7 +13,7 @@ module Demo
 
     def show
       @user.log(:show)
-      # @loggable_activities = Loggable::Activity.where(actor: @user)
+      @loggable_activities = LoggableActivity::Activity.where(actor: @user)
     end
 
     def new
