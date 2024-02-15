@@ -45,4 +45,6 @@ ROADMAP.md
 # Ignore .DS_Store files globally
 **/.DS_Store
 
+latest.dump
+
 
