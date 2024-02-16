@@ -8,7 +8,7 @@ RSpec.describe LoggableActivity::EncryptionKey, type: :model do
       user = create(:user)
       parent_key = create(:loggable_encryption_key, record: user)
       user2 = create(:user)
-      encryption_key = create(:loggable_encryption_key, record: user2, parent_key: parent_key)
+      encryption_key = create(:loggable_encryption_key, record: user2, parent_key:)
 
       expect do
         encryption_key.mark_as_deleted
@@ -23,8 +23,7 @@ RSpec.describe LoggableActivity::EncryptionKey, type: :model do
       parent_key = create(:loggable_encryption_key)
       user = create(:user)
 
-      encryption_key =
-        LoggableActivity::EncryptionKey.for_record(user, parent_key)
+      LoggableActivity::EncryptionKey.for_record(user, parent_key)
 
       # expect(encryption_key.record).to eq(user)
       # expect(encryption_key.parent_key).to eq(parent_key)
