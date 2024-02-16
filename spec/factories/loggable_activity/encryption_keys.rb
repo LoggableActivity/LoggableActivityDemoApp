@@ -5,7 +5,7 @@ FactoryBot.define do
     association :record, factory: :user
     # record_type { 'Demo::Addredd' }
     # record_id { SecureRandom.uuid }
-    # parrent_key { SecureRandom.uuid }
+    # parent_key { SecureRandom.uuid }
     key { SecureRandom.hex(16) }
   end
 end

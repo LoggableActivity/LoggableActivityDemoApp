@@ -60,11 +60,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_10_124006) do
   end
 
   create_table "loggable_encryption_keys", force: :cascade do |t|
-    t.bigint "parrent_key_id"
+    t.bigint "parent_key_id"
     t.string "key"
     t.string "record_type"
     t.bigint "record_id"
-    t.index ["parrent_key_id"], name: "index_loggable_encryption_keys_on_parrent_key_id"
+    t.index ["parent_key_id"], name: "index_loggable_encryption_keys_on_parent_key_id"
     t.index ["record_type", "record_id"], name: "index_loggable_encryption_keys_on_record"
   end
 
@@ -104,7 +104,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_10_124006) do
   add_foreign_key "demo_journals", "users", column: "doctor_id"
   add_foreign_key "demo_journals", "users", column: "patient_id"
   add_foreign_key "demo_user_profiles", "users"
-  add_foreign_key "loggable_encryption_keys", "loggable_encryption_keys", column: "parrent_key_id", on_delete: :nullify
+  add_foreign_key "loggable_encryption_keys", "loggable_encryption_keys", column: "parent_key_id", on_delete: :nullify
   add_foreign_key "loggable_payloads", "loggable_activities", column: "activity_id"
   add_foreign_key "users", "demo_addresses"
   add_foreign_key "users", "demo_clubs"
