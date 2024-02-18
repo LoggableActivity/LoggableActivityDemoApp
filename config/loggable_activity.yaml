@@ -78,7 +78,7 @@ Demo::Journal:
   relations:
     - belongs_to: :doctor
       model: User 
-      data_owner: true
+      data_owner: false 
       loggable_attrs:
         - first_name 
         - last_name 

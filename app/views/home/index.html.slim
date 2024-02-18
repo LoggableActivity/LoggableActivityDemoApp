@@ -5,14 +5,33 @@
       h1.display-5.fw-bold Protect and secure the privacy of users
       p.col-md-8.fs-4 LoggableActivity is a Ruby gem for Rails applications that records user activities and protects sensitive data.
       h4 Try it out with the credentials below or sign up for a new account.
-      .row 
-        .col-md-3
-          b Username:
-          br elvis@example.com
-        .col-md-3
-          b Password:
-          br/
-          |password1234
+      .row
+        .col-6
+          .row.mt-4 
+            .col-md-6
+              b Username:
+              br elvis@example.com
+            .col-md-6
+              b Password:
+              br/
+              |password1234
+          .row.mt-4 
+            .col-md-6
+              b Username:
+              br freddie@example.com
+            .col-md-6
+              b Password:
+              br/
+              |password1234
+        .col-6.mt-4
+          ul 
+            li Click around Users/Addresses/Clubs/Journals in the top menu 
+            li Select some thing to look at
+            li Look in the activity log to see what has been logged.
+            li Try to update something and see what is logged.
+            li Notice that there are relations between the users and clubs.
+            li Try to delete a club that has a user and see what is logged.
+      
 .container.mt-4
   .row.row-cols-1.row-cols-md-3.g-4
     .col
@@ -42,10 +61,12 @@
     .col
       .card.h-100
         .card-body 
-          h5.card-title Try it out 
+          h5.card-title Links 
           ul 
-            li Show a user profile
-            li Go to the Activity Log
+            li = link_to "Getting started guide", "https://github.com/maxgronlund/LoggableActivity/blob/main/GETTING-STARTED.md", target: "_blank"
+            li = link_to "Contribute on github", "https://github.com/maxgronlund/LoggableActivity/", target: "_blank"
+            li = link_to "rubygems.org", "https://rubygems.org/gems/loggable_activity", target: "_blank"
+            li = link_to "Slack", "https://join.slack.com/t/loggableactivity/shared_invite/zt-2a3tvgv37-mGwjHJTrBXBH2srXFRRSXQ", target: "_blank"
     .col
       .card.h-100
         .card-body 
