@@ -53,7 +53,7 @@ RSpec.describe LoggableActivity::EncryptionKey, type: :model do
       expect(encryption_key.record).to eq(user)
       expect(encryption_key.parent_key.record).to eq(address)
       expect(encryption_key.key).to be_a(String)
-      expect(encryption_key.key.length).to eq(32) # 16 bytes
+      expect(encryption_key.key.length).to eq(44)
     end
   end
 end
