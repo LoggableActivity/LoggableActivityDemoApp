@@ -9,4 +9,4 @@ tr
       br/
       = render partial: 'loggable_activity/templates/shared/updated_relations', locals: { updated_relations: updated_relations }
   td 
-    =< link_to 'Delete', demo_activity_log_path(activity), data: {  turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
+    =< link_to 'Delete', demo_activity_log_path(activity), data: {  turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'

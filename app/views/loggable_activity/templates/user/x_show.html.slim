@@ -11,4 +11,4 @@ tr
         = "<i>#{k}:</i> #{v.blank? ? t('loggable.activity.deleted') : v}".html_safe
         br/
   td 
-    =< link_to 'Delete', demo_activity_log_path(activity), data: {  turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
+    =< link_to 'Delete', demo_activity_log_path(activity), data: {  turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
