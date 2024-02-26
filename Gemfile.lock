@@ -124,6 +124,8 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    faker (3.2.3)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -291,6 +293,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sentry-rails (5.16.1)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.16.1)
+    sentry-ruby (5.16.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     slim (5.2.1)
       temple (~> 0.10.0)
       tilt (>= 2.1.0)
@@ -353,6 +360,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9.3)
   factory_bot_rails
+  faker
   jbuilder
   jsbundling-rails
   loggable_activity (~> 0.1.54)
@@ -364,6 +372,8 @@ DEPENDENCIES
   rubocop (~> 1.59)
   rubocop-discourse (~> 3.6)
   selenium-webdriver
+  sentry-rails
+  sentry-ruby
   slim-rails
   sprockets-rails
   stimulus-rails
