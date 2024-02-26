@@ -7,12 +7,13 @@ Sentry.init do |config|
   config.dsn = ENV.fetch('SENTRY_DSN', nil)
 
   # config.environment = 'production'
+  config.enabled_environments = %w[production]
 
   # To activate performance monitoring, set one of these options.
   # We recommend adjusting the value in production:
   # config.traces_sample_rate = 1.0
   # or
-  config.traces_sampler = lambda do |_context|
-    true
-  end
+  # config.traces_sampler = lambda do |_context|
+  #   true
+  # end
 end
