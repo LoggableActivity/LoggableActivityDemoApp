@@ -6,7 +6,6 @@ Sentry.init do |config|
 
   config.dsn = ENV.fetch('SENTRY_DSN', nil)
 
-  # config.environments = ['production', 'development']
   config.enabled_environments = %w[production]
 
   # To activate performance monitoring, set one of these options.
