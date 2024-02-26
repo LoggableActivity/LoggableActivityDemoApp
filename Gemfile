@@ -60,13 +60,15 @@ gem 'loggable_activity', '~> 0.1.54'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem 'sentry-rails'
+gem 'sentry-ruby'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'awesome_print'
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'debug', platforms: %i[mri windows]
-  gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop', '~> 1.59'
   gem 'rubocop-discourse', '~> 3.6'
@@ -86,5 +88,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'selenium-webdriver'
 end

@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :demo_address, class: 'Demo::Address' do
-    street { 'MyString' }
-    city { 'MyString' }
-    country { 'MyString' }
-    postal_code { 'MyString' }
+    street { Faker::Address.street_name }
+    city { Faker::Address.city }
+    country { Faker::Address.country }
+    postal_code { Faker::Address.zip_code }
   end
 end
