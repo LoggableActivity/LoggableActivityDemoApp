@@ -33,7 +33,7 @@ gem 'loggable_activity', '~> x.x.x', path: '/THE_LOCATION_OF_THE_GEM/LoggableAct
 # gem 'loggable_activity', '~> 'x.x.x'
 ```
 
-## Clone the gem from github and build build it on you local machine
+## Clone the gem from github and build it on you local machine
 [https://github.com/maxgronlund/LoggableActivity](https://github.com/maxgronlund/LoggableActivity)
 ```
 $ gem build loggable_activity.gemspec
