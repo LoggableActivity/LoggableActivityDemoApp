@@ -15,7 +15,7 @@ $ bundle install
 $ rake db:create && rake db:migrate && db:seed
 $ rails server
 ```
-Now you should be able to open the demo app on [http://localhost:3000l](http://localhost:3000)
+Now you should be able to open the demo app on [http://localhost:3000](http://localhost:3000)
 
 ## Test
 ```
@@ -33,8 +33,9 @@ gem 'loggable_activity', '~> x.x.x', path: '/THE_LOCATION_OF_THE_GEM/LoggableAct
 # gem 'loggable_activity', '~> 'x.x.x'
 ```
 
-## Build the gem on your local machine
+## Clone the gem from github and build build it on you local machine
+[https://github.com/maxgronlund/LoggableActivity](https://github.com/maxgronlund/LoggableActivity)
 ```
 $ gem build loggable_activity.gemspec
 ```
-Now you can run your changes to the gem.
+Now you can run your changes to the gem in the this demo project.
