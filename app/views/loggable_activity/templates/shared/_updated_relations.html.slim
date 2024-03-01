@@ -1,19 +1,23 @@
 - updated_relations.each do |relation|
-  b.text-secondary = update_relation_class(relation)
+  / b.text-secondary = relation_type(relation)
   br/
-  - if relation[:previous_attrs].present?
+  - if previous_attrs = relation[:previous_attrs]
     i From:
     br/
-    = render partial:'loggable_activity/templates/shared/list_attrs', locals: {attrs: relation[:previous_attrs][:attrs] }
+    b = relation_type(previous_attrs)
+    br/
+    = render partial:'loggable_activity/templates/shared/list_attrs', locals: {attrs: previous_attrs[:attrs] }
   - else 
     i From: 
     br/ 
     |Empty
     br
-  - if relation[:current_attrs].present?
+  - if current_attrs = relation[:current_attrs]
     i To:
     br/
-    = render partial: 'loggable_activity/templates/shared/list_attrs', locals: { attrs: relation[:current_attrs][:attrs] }
+    b = relation_type(current_attrs)
+    br/
+    = render partial: 'loggable_activity/templates/shared/list_attrs', locals: { attrs: current_attrs[:attrs] }
   - else 
     i To: 
     br/
