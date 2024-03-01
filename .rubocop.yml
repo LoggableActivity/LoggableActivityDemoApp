@@ -33,3 +33,4 @@ Metrics/AbcSize:
   Exclude:
     - lib/loggable_activity/encryption.rb
     - lib/loggable_activity/update_payloads_builder.rb
+    - db/migrate/20240301105933_create_loggable_activities.rb
