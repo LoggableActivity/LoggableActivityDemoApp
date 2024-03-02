@@ -11,8 +11,9 @@ RSpec.describe 'Demo::Adress', type: :request do
       sign_in user
       Thread.current[:current_user] = user
       create_list(:demo_address, 5)
-      get demo_addresses_path
-      expect(response).to have_http_status(200)
+      # get demo_city_addresses_path()
+      # expect(response).to have_http_status(200)
+      expect(true).to be_falsey
     end
   end
 
@@ -22,9 +23,10 @@ RSpec.describe 'Demo::Adress', type: :request do
     it 'creates a new address' do
       sign_in user
       Thread.current[:current_user] = user
-      post demo_addresses_path, params: { demo_address: attributes_for(:demo_address) }
-      follow_redirect!
-      expect(response.body).to include('Address was successfully created.')
+      # post demo_addresses_path, params: { demo_address: attributes_for(:demo_address) }
+      # follow_redirect!
+      # expect(response.body).to include('Address was successfully created.')
+      expect(true).to be_falsey
     end
   end
 end

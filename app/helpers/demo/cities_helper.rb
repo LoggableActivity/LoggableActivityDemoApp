@@ -1,0 +1,2 @@
+module Demo::CitiesHelper
+end

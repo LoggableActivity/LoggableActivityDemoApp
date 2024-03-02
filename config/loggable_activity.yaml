@@ -22,7 +22,6 @@ User:
       model: Demo::Address
       loggable_attrs:
         - street
-        - city
         - country
         - postal_code
     - belongs_to: :demo_club
@@ -35,7 +34,6 @@ Demo::Address:
   actor_display_name: email
   loggable_attrs:
     - street
-    - city
     - country
     - postal_code
   auto_log:
@@ -66,7 +64,6 @@ Demo::Club:
       model: Demo::Address
       loggable_attrs:
         - street
-        - city
         - country
         - postal_code
 Demo::Journal: 

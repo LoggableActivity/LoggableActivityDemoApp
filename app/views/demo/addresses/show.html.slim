@@ -1,7 +1,7 @@
 .container.mt-4
   .card.panel-default
     .card-header
-      h3.card-title = "Address"
+      h3.card-title Address
     .card-body
       ul.list-group.list-group-flush
         li.list-group-item
@@ -11,11 +11,5 @@
           strong City:
           span.float-end = @address.city
         li.list-group-item
-          strong Country:
-          span.float-end = @address.country
-        li.list-group-item
           strong Postal code:
           span.float-end = @address.postal_code
-    .card-footer
-      = link_to 'Edit', edit_demo_address_path(@address), class: 'btn btn-primary'
-      =< link_to 'Back', demo_addresses_path, class: 'btn btn-secondary ml-2'

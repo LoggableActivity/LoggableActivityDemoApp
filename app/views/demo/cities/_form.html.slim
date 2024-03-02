@@ -1,0 +1,19 @@
+/ = form_with(model: demo_city) do |form|
+= form_for [demo_city], html: { class: 'form-horizontal' } do |form|
+  / - if demo_city.errors.any?
+    div style="color: red"
+      h2 = "#{pluralize(demo_city.errors.count, "error")} prohibited this demo_city from being saved:"
+      ul
+        - demo_city.errors.each do |error|
+          li = error.full_message
+
+  .form-group.mt-2
+    = form.label :country, class: 'col-sm-2 control-label' 
+    = form.text_field :country
+
+  .form-group.mt-2
+    = form.label :name, class: 'col-sm-2 control-label'
+    = form.text_field :name
+
+  div
+    = form.submit 'Save City', class: 'btn btn-primary btn-sm'

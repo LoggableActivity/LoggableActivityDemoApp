@@ -43,7 +43,7 @@ module Demo
     def update
       respond_to do |format|
         if @address.update(address_params)
-          format.html { redirect_to demo_addresses_path, notice: 'Address was successfully updated.' }
+          format.html { redirect_to demo_city_path(@address.demo_city), notice: 'Address was successfully updated.' }
           format.json { render :show, status: :ok, location: @address }
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -70,7 +70,7 @@ module Demo
 
     # Only allow a list of trusted parameters through.
     def address_params
-      params.require(:demo_address).permit(:street, :city, :country, :postal_code)
+      params.require(:demo_address).permit(:street, :city, :postal_code)
     end
   end
 end
