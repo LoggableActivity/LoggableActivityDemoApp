@@ -4,6 +4,7 @@ module Demo
   class AddressesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_address, only: %i[show edit update destroy]
+    before_action :set_city, only: %i[show new edit update create destroy]
 
     # GET /demo/addresses or /demo/addresses.json
     def index
@@ -30,7 +31,7 @@ module Demo
       respond_to do |format|
         if @address.save
           # @address.log(:create, current_user)
-          format.html { redirect_to demo_address_url(@address), notice: 'Address was successfully created.' }
+          format.html { redirect_to demo_city_url(@address.demo_city), notice: 'Address was successfully created.' }
           format.json { render :show, status: :created, location: @address }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +44,7 @@ module Demo
     def update
       respond_to do |format|
         if @address.update(address_params)
-          format.html { redirect_to demo_addresses_path, notice: 'Address was successfully updated.' }
+          format.html { redirect_to demo_city_url(@address.demo_city), notice: 'Address was successfully updated.' }
           format.json { render :show, status: :ok, location: @address }
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +57,7 @@ module Demo
       @address.destroy!
 
       respond_to do |format|
-        format.html { redirect_to demo_addresses_url, notice: 'Address was successfully destroyed.' }
+        format.html { redirect_to demo_city_url, notice: 'Address was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
@@ -68,9 +69,13 @@ module Demo
       @address = Demo::Address.find(params[:id])
     end
 
+    def set_city
+      @city = Demo::City.find(params[:city_id])
+    end
+
     # Only allow a list of trusted parameters through.
     def address_params
-      params.require(:demo_address).permit(:street, :city, :country, :postal_code)
+      params.require(:demo_address).permit(:street, :postal_code, :demo_city_id)
     end
   end
 end

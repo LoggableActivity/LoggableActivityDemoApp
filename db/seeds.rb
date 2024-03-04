@@ -13,20 +13,22 @@ puts '-------------------- Seeding data ---------------------'
 
 LoggableActivity::EncryptionKey.destroy_all
 
-addresses = [
-  { street: 'Ice Hotel, Marknadsvägen 63', city: 'Jukkasjärvi', country: 'Sweden', postal_code: '981 91' },
-  { street: 'The Palace of Versailles', city: 'Versailles', country: 'France', postal_code: '78000' },
-  { street: 'Santorini, Thera 847 00', city: 'Santorini', country: 'Greece', postal_code: '847 00' },
-  { street: 'Petra, Wadi Musa', city: 'Ma\'an', country: 'Jordan', postal_code: '71810' },
-  { street: 'Pyramid of Giza', city: 'Giza', country: 'Egypt', postal_code: '12588' },
-  { street: 'The Great Wall of China', city: 'Beijing', country: 'China', postal_code: '100006' },
-  { street: 'Eiffel Tower', city: 'Paris', country: 'France', postal_code: '75007' },
-  { street: 'Machu Picchu', city: 'Aguas Calientes', country: 'Peru', postal_code: '08680' }
+Demo::City.destroy_all
+Demo::Address.destroy_all
+
+cities = [
+  { name: 'Jukkasjärvi', country: 'Sweden', demo_addresses_attributes: [{ street: 'Ice Hotel, Marknadsvägen 63', postal_code: '981 91' }] },
+  { name: 'Versailles', country: 'France', demo_addresses_attributes: [{ street: 'The Palace of Versailles', postal_code: '78000' }] },
+  { name: 'Santorini', country: 'Greece', demo_addresses_attributes: [{ street: 'Santorini, Thera 847 00', postal_code: '847 00' }] },
+  { name: 'Ma\'an', country: 'Jordan', demo_addresses_attributes: [{ street: 'Petra, Wadi Musa', postal_code: '71810' }] },
+  { name: 'Giza', country: 'Egypt', demo_addresses_attributes: [{ street: 'Pyramid of Giza', postal_code: '12588' }] },
+  { name: 'Beijing', country: 'China', demo_addresses_attributes: [{ street: 'The Great Wall of China', postal_code: '100006' }] },
+  { name: 'Paris', country: 'France', demo_addresses_attributes: [{ street: 'Eiffel Tower', postal_code: '75007' }] },
+  { name: 'Aguas Calientes', country: 'Peru', demo_addresses_attributes: [{ street: 'Machu Picchu', postal_code: '08680' }] }
 ]
 
-Demo::Address.destroy_all
-addresses.each do |address|
-  Demo::Address.find_or_create_by!(address)
+cities.each do |city_attr|
+  Demo::City.create!(city_attr)
 end
 
 clubs = [

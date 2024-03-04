@@ -30,15 +30,15 @@
           li.list-group-item
             strong City:
             span.float-end 
-              = @user.demo_address.city
+              = @user.demo_address&.demo_city.name
           li.list-group-item
             strong Postal Code:
             span.float-end 
               = @user.demo_address.postal_code
-          li.list-group-item
+          / li.list-group-item
             strong Country:
             span.float-end 
-              = @user.demo_address.country
+              = @user.demo_address&.city.country
 
     .card-footer
       = link_to 'Edit', edit_demo_user_path(@user), class: 'btn btn-primary btn-sm'

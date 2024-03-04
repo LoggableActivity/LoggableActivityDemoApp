@@ -17,8 +17,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
   create_table "demo_addresses", force: :cascade do |t|
     t.string "street"
     t.string "city"
-    t.string "country"
     t.string "postal_code"
+    t.bigint "demo_city_id"
+    t.index ["demo_city_id"], name: "index_demo_addresses_on_demo_city_id"
+  end
+
+  create_table "demo_cities", force: :cascade do |t|
+    t.string "name"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "demo_clubs", force: :cascade do |t|
@@ -90,6 +98,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "address_id"
     t.integer "demo_address_id"
     t.string "first_name"
     t.string "last_name"
@@ -97,10 +106,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
     t.text "bio"
     t.integer "user_type", default: 0
     t.integer "demo_club_id"
+    t.index ["address_id"], name: "index_users_on_address_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "demo_addresses", "demo_cities"
   add_foreign_key "demo_clubs", "demo_addresses"
   add_foreign_key "demo_journals", "users", column: "doctor_id"
   add_foreign_key "demo_journals", "users", column: "patient_id"
@@ -108,5 +119,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
   add_foreign_key "loggable_encryption_keys", "loggable_encryption_keys", column: "parent_key_id", on_delete: :nullify
   add_foreign_key "loggable_payloads", "loggable_activities", column: "activity_id"
   add_foreign_key "users", "demo_addresses"
+  add_foreign_key "users", "demo_addresses", column: "address_id"
   add_foreign_key "users", "demo_clubs"
 end

@@ -61,7 +61,7 @@ RSpec.describe 'Users', type: :request do
                                         {
                                           record_type: 'User',
                                           record_id: a_kind_of(Integer),
-                                          path: a_kind_of(String),
+                                          route: a_kind_of(String),
                                           payload_type: 'primary_payload',
                                           attrs: {
                                             'first_name' => a_kind_of(String),

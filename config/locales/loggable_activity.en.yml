@@ -29,8 +29,18 @@ en:
         destroy: A user was deleted
       models:
         Demo::Address: Address
+        Demo::City: City
         Demo::UserProfile: Profile
         Demo::Club: Club
         Demo::Journal: Journal
         Demo/Product: Product
         User: User
+      routes:
+        show_demo_address: Address
+        show_demo_club: Club 
+        show_demo_journal: Journal 
+        show_user: User
+        show_doctor: Doctor
+        show_patient: Patient
+        show_user_profile: Profile
+        

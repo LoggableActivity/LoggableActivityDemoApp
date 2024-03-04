@@ -13,11 +13,13 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :demo do
-    resources :user_profiles
+    resources :addresses
+    resources :cities do
+      resources :addresses, as: 'demo_addresses'
+    end
     resources :journals
     resources :clubs
     resources :activity_logs
     resources :users
-    resources :addresses
   end
 end
