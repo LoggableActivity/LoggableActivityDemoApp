@@ -17,14 +17,14 @@ Demo::City.destroy_all
 Demo::Address.destroy_all
 
 cities = [
-  { name: 'Jukkasjärvi', country: 'Sweden', demo_addresses_attributes: [{ street: 'Ice Hotel, Marknadsvägen 63', country: 'Sweden', postal_code: '981 91' }] },
-  { name: 'Versailles', country: 'France', demo_addresses_attributes: [{ street: 'The Palace of Versailles', country: 'France', postal_code: '78000' }] },
-  { name: 'Santorini', country: 'Greece', demo_addresses_attributes: [{ street: 'Santorini, Thera 847 00', country: 'Greece', postal_code: '847 00' }] },
-  { name: 'Ma\'an', country: 'Jordan', demo_addresses_attributes: [{ street: 'Petra, Wadi Musa', country: 'Jordan', postal_code: '71810' }] },
-  { name: 'Giza', country: 'Egypt', demo_addresses_attributes: [{ street: 'Pyramid of Giza', country: 'Egypt', postal_code: '12588' }] },
-  { name: 'Beijing', country: 'China', demo_addresses_attributes: [{ street: 'The Great Wall of China', country: 'China', postal_code: '100006' }] },
-  { name: 'Paris', country: 'France', demo_addresses_attributes: [{ street: 'Eiffel Tower', country: 'France', postal_code: '75007' }] },
-  { name: 'Aguas Calientes', country: 'Peru', demo_addresses_attributes: [{ street: 'Machu Picchu', country: 'Peru', postal_code: '08680' }] }
+  { name: 'Jukkasjärvi', country: 'Sweden', demo_addresses_attributes: [{ street: 'Ice Hotel, Marknadsvägen 63', postal_code: '981 91' }] },
+  { name: 'Versailles', country: 'France', demo_addresses_attributes: [{ street: 'The Palace of Versailles', postal_code: '78000' }] },
+  { name: 'Santorini', country: 'Greece', demo_addresses_attributes: [{ street: 'Santorini, Thera 847 00', postal_code: '847 00' }] },
+  { name: 'Ma\'an', country: 'Jordan', demo_addresses_attributes: [{ street: 'Petra, Wadi Musa', postal_code: '71810' }] },
+  { name: 'Giza', country: 'Egypt', demo_addresses_attributes: [{ street: 'Pyramid of Giza', postal_code: '12588' }] },
+  { name: 'Beijing', country: 'China', demo_addresses_attributes: [{ street: 'The Great Wall of China', postal_code: '100006' }] },
+  { name: 'Paris', country: 'France', demo_addresses_attributes: [{ street: 'Eiffel Tower', postal_code: '75007' }] },
+  { name: 'Aguas Calientes', country: 'Peru', demo_addresses_attributes: [{ street: 'Machu Picchu', postal_code: '08680' }] }
 ]
 
 cities.each do |city_attr|

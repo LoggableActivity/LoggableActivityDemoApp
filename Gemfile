@@ -54,8 +54,8 @@ gem 'slim-rails'
 # Use Devise for authentication
 gem 'devise', '~> 4.9.3'
 
-# gem 'loggable_activity', '~> 0.1.54', path: '/Users/maxgronlund/Documents/Max/open-source/LoggableActivity'
-gem 'loggable_activity', '~> 0.1.55'
+gem 'loggable_activity', '~> 0.1.55', path: '/Users/maxgronlund/Documents/Max/open-source/LoggableActivity'
+# gem 'loggable_activity', '~> 0.1.55'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -90,5 +90,6 @@ group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
   gem 'selenium-webdriver'
 end

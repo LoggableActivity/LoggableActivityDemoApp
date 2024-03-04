@@ -6,7 +6,9 @@ class CreateDemoAddresses < ActiveRecord::Migration[7.1]
       t.string :street
       t.string :city
       t.string :postal_code
+      t.references :demo_city, null: true, foreign_key: true
     end
-    # add_reference :users, :address, foreign_key: { to_table: :demo_addresses }
+
+    add_reference :users, :address, foreign_key: { to_table: :demo_addresses }
   end
 end

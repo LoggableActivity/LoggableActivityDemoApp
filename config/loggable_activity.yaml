@@ -1,6 +1,31 @@
+Demo::City:
+  route: show_demo_city
+  record_display_name: name
+  loggable_attrs:
+    - name
+    - country
+  auto_log:
+    - create
+    - update
+    - destroy
+  relations:
+    - has_many: :demo_addresses
+      record_display_name: full_address
+      route: show_demo_city_demo_address 
+      model: Demo::Address
+      loggable_attrs:
+        - street
+        - postal_code
+    - has_many: :users
+      route: show_demo_city_address
+      model: User
+      loggable_attrs:
+        - first_name
+        - last_name
+
 User: 
   record_display_name: full_name
-  route: demo_user_path
+  route: show_user
   loggable_attrs: 
     - first_name
     - last_name 
@@ -13,28 +38,28 @@ User:
     - destroy
   relations:
     - has_one: :demo_user_profile
+      route: show_user_profile
       model: Demo::UserProfile 
       loggable_attrs:
         - sex
         - religion
     - belongs_to: :demo_address
-      route: demo_address_path
+      route: show_demo_address
       model: Demo::Address
       loggable_attrs:
         - street
-        - country
         - postal_code
     - belongs_to: :demo_club
+      route: show_demo_club
       model: Demo::Club
       loggable_attrs:
         - name
 Demo::Address: 
   record_display_name: full_address
-  route: demo_address_path
+  route: show_demo_address
   actor_display_name: email
   loggable_attrs:
     - street
-    - country
     - postal_code
   auto_log:
     - create
@@ -52,7 +77,7 @@ Demo::Product:
     - destroy
 Demo::Club: 
   record_display_name: name 
-  route: demo_club_path
+  route: show_demo_club
   loggable_attrs: 
     - name
   auto_log:
@@ -64,11 +89,10 @@ Demo::Club:
       model: Demo::Address
       loggable_attrs:
         - street
-        - country
         - postal_code
 Demo::Journal: 
   record_display_name: title 
-  route: demo_journal_path
+  route: show_demo_journal
   loggable_attrs: 
     - title 
     - body
@@ -80,7 +104,7 @@ Demo::Journal:
   relations:
     - belongs_to: :doctor
       model: User 
-      route: demo_user_path
+      route: show_doctor
       data_owner: false 
       loggable_attrs:
         - first_name 
@@ -88,7 +112,7 @@ Demo::Journal:
         - email 
         - user_type
     - belongs_to: :patient
-      route: demo_user_path
+      route: show_patient
       model: User 
       data_owner: true
       loggable_attrs:
@@ -98,6 +122,7 @@ Demo::Journal:
         - age 
         - user_type
 Demo::UserProfile: 
+  route: show_user
   loggable_attrs:
     - sex
     - religion

@@ -7,9 +7,11 @@
         li.list-group-item
           strong Street:
           span.float-end = @address.street
-        li.list-group-item
+        / li.list-group-item
           strong City:
           span.float-end = @address.city
         li.list-group-item
           strong Postal code:
           span.float-end = @address.postal_code
+        li.list-group-item
+          = link_to 'Edit', edit_demo_city_demo_address_path(@address.demo_city, @address), class: 'btn btn-primary btn-sm'

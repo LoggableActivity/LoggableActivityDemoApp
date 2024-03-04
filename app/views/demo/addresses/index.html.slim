@@ -5,18 +5,17 @@
       tr
         th Street
         th City
-        th Country
         th Postal Code
         th Actions
     tbody
       - @addresses.each do |address|
         tr
           td = address.street
-          td = address.city
+          td = address&.demo_city.name
           td = address.postal_code
           td
-            = link_to 'Show', [address], class: 'btn btn-info btn-sm'
-            =< link_to 'Edit', edit_demo_address_path(address), class: 'btn btn-primary btn-sm'
-            =< link_to 'Delete', [address], data: { turbo_method: :delete, turbo_turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
+            = link_to 'Show', demo_city_demo_address_path(address.demo_city, address), class: 'btn btn-info btn-sm'
+            / =< link_to 'Edit', edit_demo_city_demo_address_path(address.demo_city, address), class: 'btn btn-primary btn-sm'
+            / =< link_to 'Delete', [address.demo_city, address], data: { turbo_method: :delete, turbo_turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
 
-  = link_to 'New Address', new_demo_address_path, class: 'btn btn-success'
+  / = link_to 'New Address', new_demo_address_path, class: 'btn btn-success'
