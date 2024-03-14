@@ -1,7 +1,7 @@
 en:
   loggable:
     activity:
-      deleted: "***** DELETED *****"
+      deleted: "*** Deleted ***"
       demo/address:
         update: An address was updated
         create: An address was created

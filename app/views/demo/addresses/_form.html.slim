@@ -1,13 +1,20 @@
-= form_for([demo_city, demo_address], html: { class: 'form-horizontal' }) do |f|
-  = f.hidden_field :demo_city_id, value: demo_city.id
-  .form-group.mt-2
-    = f.label :street, class: 'col-sm-2 control-label'
-    .col-sm-10
-      = f.text_field :street, class: 'form-control'
-  .form-group.mt-2
-    = f.label :postal_code, class: 'col-sm-2 control-label'
-    .col-sm-10
-      = f.text_field :postal_code, class: 'form-control'
-  .form-group.mt-2
-    .col-sm-offset-2.col-sm-10
-      = f.submit 'Save Address', class: 'btn btn-primary btn-sm'
+/ = form_for([demo_city, demo_address], html: { class: 'form-horizontal' }) do |f|
+- if demo_city
+  h3 = demo_city.name
+.form-group
+  = f.label :demo_city_id, 'City', class: 'col-sm-2 control-label'
+  .col-sm-10
+    = f.select :demo_city_id, @demo_city_options, { include_blank: 'Select a City' }, { class: 'form-control' }
+
+
+.form-group.mt-2
+  = f.label :street, class: 'col-sm-2 control-label'
+  .col-sm-10
+    = f.text_field :street, class: 'form-control'
+.form-group.mt-2
+  = f.label :postal_code, class: 'col-sm-2 control-label'
+  .col-sm-10
+    = f.text_field :postal_code, class: 'form-control'
+.form-group.mt-2
+  .col-sm-offset-2.col-sm-10
+    = f.submit 'Save Address', class: 'btn btn-primary btn-sm'

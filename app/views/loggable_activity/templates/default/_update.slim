@@ -1,12 +1,25 @@
 tr
   td
-    = render partial: 'loggable_activity/templates/shared/activity_info', locals: { activity: activity }
+    / ap activity.attrs
+    / = render partial: 'loggable_activity/templates/shared/activity_info', locals: { activity: activity }
   td
-    - update_activity_attrs = activity.update_activity_attrs
-    - if update_attrs = update_activity_attrs[:update_attrs]
-      = render partial: 'loggable_activity/templates/shared/update_attrs', locals: { update_attrs: update_attrs }
-    - if updated_relations = update_activity_attrs[:updated_relations_attrs]
+    
+    / - activity.attrs.each do |attrs|
+      b.text-secondary = payload_type_text_or_link(attrs)
       br/
-      = render partial: 'loggable_activity/templates/shared/updated_relations', locals: { updated_relations: updated_relations }
+      - case attrs[:payload_type] 
+      - when 'primary_update_payload'
+        = render partial: 'loggable_activity/templates/shared/changes', locals: { changes: attrs[:payload_attrs] }
+      - when 'update_payload'
+        = render partial: 'loggable_activity/templates/shared/changes', locals: { changes: attrs[:payload_attrs] }
+        
+        / = attrs[:payload_attrs]
+      br/
+    / - update_activity_attrs = activity.update_activity_attrs
+    / - if update_attrs = update_activity_attrs[:update_attrs]
+    /   = render partial: 'loggable_activity/templates/shared/update_attrs', locals: { update_attrs: update_attrs }
+    / - if updated_relations = update_activity_attrs[:updated_relations_attrs]
+    /   br/
+    /   = render partial: 'loggable_activity/templates/shared/updated_relations', locals: { updated_relations: updated_relations }
   td 
     =< link_to 'Delete', demo_activity_log_path(activity), data: {  turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'

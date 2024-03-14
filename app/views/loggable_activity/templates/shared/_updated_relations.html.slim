@@ -1,10 +1,10 @@
 - updated_relations.each do |relation|
-  / b.text-secondary = relation_type(relation)
+  b.text-secondary = payload_type_text_or_link(relation)
   br/
   - if previous_attrs = relation[:previous_attrs]
     i From:
     br/
-    b = relation_type(previous_attrs)
+    b = payload_type_text_or_link(previous_attrs)
     br/
     = render partial:'loggable_activity/templates/shared/list_attrs', locals: {attrs: previous_attrs[:attrs] }
   - else 
@@ -15,7 +15,7 @@
   - if current_attrs = relation[:current_attrs]
     i To:
     br/
-    b = relation_type(current_attrs)
+    b = payload_type_text_or_link(current_attrs)
     br/
     = render partial: 'loggable_activity/templates/shared/list_attrs', locals: { attrs: current_attrs[:attrs] }
   - else 

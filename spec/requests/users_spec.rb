@@ -68,8 +68,9 @@ RSpec.describe 'Users', type: :request do
                                             'last_name' => a_kind_of(String),
                                             'age' => a_kind_of(String),
                                             'email' => a_kind_of(String),
-                                            'user_type' => a_kind_of(String)
-                                          }
+                                            'user_type' => a_kind_of(String),
+                                          },
+                                          uuid: a_kind_of(String)
                                         }
                                       ])
     end

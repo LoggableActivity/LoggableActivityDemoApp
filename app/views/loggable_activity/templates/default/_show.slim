@@ -1,4 +1,9 @@
 tr
+  pre
+    code.language-json
+      = format_json_for_display(activity.attrs)
+
+/ tr
   td
     = render partial: 'loggable_activity/templates/shared/activity_info', locals: { activity: activity }
   td 

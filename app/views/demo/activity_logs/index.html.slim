@@ -1,11 +1,36 @@
 .container
-  h1 Activities 
-  table.table 
-    thead
-      tr
-        th Info 
-        th Attributes
-        th Actions
+  h1 Activities
+  table.table.table-borderless
+    thead 
+      tr 
+        th 
+          .row 
+            .col-3 
+              b.text-secondary Action
+            .col-3 
+              b.text-secondary Record
+            .col-3 
+              b.text-secondary Actor
+            .col-3 
+              b.text-secondary Created At
     tbody
       - @loggable_activities.each do |activity|
-        = render_activity(activity)
+        tr
+          td
+            .alert.alert-info[type="button" data-bs-toggle="collapse" data-bs-target="#activity_#{activity.id}" aria-expanded="false" aria-controls="collapseExample"]
+              .row 
+                .col-3
+                  = t_action(activity.action)
+                .col-3
+                  = t(activity.record_display_name)
+                .col-3 
+                  = t(activity.actor_display_name)
+                .col-3 
+                  = l(activity.created_at, format: :long)
+            .collapse id="activity_#{activity.id}"
+              pre
+                code.language-json
+                  = format_json_for_display(activity.attrs)
+            / = render_activity(activity)
+javascript:
+  Prism.highlightAll();

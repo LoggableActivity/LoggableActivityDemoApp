@@ -8,30 +8,46 @@ module LoggableActivity
     include LoggableActivity::RoutesHelper
 
     def primary_activity_text_or_link(activity)
-      route = activity.primary_route
-      text = text_for_link(route)
-      return text if route.nil?
-      return text if activity.record.nil?
+      # route = activity.primary_route
+      # # text = text_for_link(route)
+      # text = route
+      # return text if route.nil?
+      # return text if activity.record.nil?
 
-      url = url_to_record(route, activity.record)
-      return text unless url.present?
+      # url = url_to_record(route, activity.record)
+      # return text unless url.present?
 
-      link_to(text, url)
+      # link_to(text, url)
+      "Please implement"
     end
 
     def payload_type_text_or_link(attrs)
-      route = attrs[:route]
-      return model_translation(attrs) if route.nil?
+      # route = attrs[:route]
+      # model_translation = model_translation(attrs)
+      # return model_translation if route.nil?
 
-      record = find_record(attrs)
-      return model_translation(attrs) if record.nil?
+      # record = find_record(attrs)
+      # return model_translation if record.nil?
 
-      text = text_for_link(route)
+      # url = url_to_record(route, record)
+      # return model_translation if url.nil?
 
-      url = url_to_record(route, record)
-      return text if url.nil?
+      # # text_for_link = text_for_link(route)
+      # link_to(model_translation, url)
+      "Please implement"
+    end
 
-      link_to(text, url)
+    def update_attrs(attrs)
+      # attrs.filter { |p| p[:payload_type] == 'update_payload' }
+      attrs
+    end
+
+    def update_relation_attrs(attrs)
+      # filtered_attrs = attrs.filter do |p|
+      #   p[:payload_type] == 'previous_relation' || p[:payload_type] == 'current_relation'
+      # end.sort_by { |p| p[:uuid] }
+      attrs
+
     end
 
     private

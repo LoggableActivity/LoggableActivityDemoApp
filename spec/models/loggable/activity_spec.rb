@@ -21,7 +21,7 @@ RSpec.describe LoggableActivity::Activity, type: :model do
       actor = FactoryBot.create(:user)
       activity = FactoryBot.build(:loggable_activity, actor:)
 
-      payload_attrs = { record: actor, encrypted_attrs: { fo: 'bar' }.to_json }
+      payload_attrs = { uuid: Faker::Internet.uuid, record: actor, encrypted_attrs: { fo: 'bar' }.to_json }
       activity.payloads.build(payload_attrs)
 
       expect(activity).to be_valid
