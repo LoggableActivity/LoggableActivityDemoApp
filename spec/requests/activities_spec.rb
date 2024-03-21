@@ -12,7 +12,7 @@ RSpec.describe 'LoggableActivty', type: :request do
       sign_in actor
 
       Thread.current[:current_user] = actor
-      original_first_name = user.first_name
+      user.first_name
       user.update!(first_name: 'John')
 
       # get demo_activity_logs_path

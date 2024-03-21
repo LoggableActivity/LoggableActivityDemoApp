@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_11_143320) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_19_150115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,11 +66,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_143320) do
     t.index ["record_type", "record_id"], name: "index_loggable_activities_on_record"
   end
 
+  create_table "loggable_data_owners", force: :cascade do |t|
+    t.string "record_type"
+    t.bigint "record_id"
+    t.bigint "encryption_key_id", null: false
+    t.index ["encryption_key_id"], name: "index_loggable_data_owners_on_encryption_key_id"
+    t.index ["record_type", "record_id"], name: "index_loggable_data_owners_on_record"
+  end
+
   create_table "loggable_encryption_keys", force: :cascade do |t|
     t.string "record_type"
     t.bigint "record_id"
     t.string "secret_key"
-    t.integer "parent_key_id"
     t.index ["record_type", "record_id"], name: "index_loggable_encryption_keys_on_record"
   end
 
@@ -116,6 +123,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_143320) do
   add_foreign_key "demo_journals", "users", column: "doctor_id"
   add_foreign_key "demo_journals", "users", column: "patient_id"
   add_foreign_key "demo_user_profiles", "users"
+  add_foreign_key "loggable_data_owners", "loggable_encryption_keys", column: "encryption_key_id"
   add_foreign_key "loggable_payloads", "loggable_activities", column: "activity_id"
   add_foreign_key "loggable_payloads", "loggable_encryption_keys", column: "encryption_key_id"
   add_foreign_key "users", "demo_addresses"

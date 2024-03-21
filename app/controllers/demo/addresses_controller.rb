@@ -27,7 +27,6 @@ module Demo
       @demo_city_options = Demo::City.all.map { |city| [city.name, city.id] }
     end
 
-
     # POST /demo/addresses or /demo/addresses.json
     def create
       @address = Demo::Address.new(address_params)
@@ -74,9 +73,9 @@ module Demo
       return demo_addresses_url if @address.id.nil?
       return demo_addresses_url if @city.nil?
       return demo_addresses_url if request.referer == demo_address_url(@address)
-      demo_city_url(@city) 
-    end
 
+      demo_city_url(@city)
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_address
@@ -85,6 +84,7 @@ module Demo
 
     def set_city
       return nil if params[:city_id].nil?
+
       @city = Demo::City.find(params[:city_id])
     end
 

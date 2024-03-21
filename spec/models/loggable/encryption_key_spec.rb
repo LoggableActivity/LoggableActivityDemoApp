@@ -3,27 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe LoggableActivity::EncryptionKey, type: :model do
-  describe '#mark_as_deleted' do
-    it 'updates the key to nil and recursively marks parent key as deleted' do
-      user = create(:user)
-      parent_key = create(:loggable_encryption_key, record: user)
-      user2 = create(:user)
-      encryption_key = create(:loggable_encryption_key, record: user2, parent_key:)
-
-      expect do
-        encryption_key.mark_as_deleted
-      end.to change { encryption_key.reload.key }.to(be_nil)
-
-      expect(parent_key.reload.key).to eq(nil)
-    end
-  end
-
   describe '.for_record_by_type_and_id' do
     it 'returns an existing encryption key or creates a new one' do
       parent_key = create(:loggable_encryption_key)
       user = create(:user)
 
-      LoggableActivity::EncryptionKey.for_record(user, parent_key)
+      ap LoggableActivity::EncryptionKey.for_record(user, parent_key)
 
       # expect(encryption_key.record).to eq(user)
       # expect(encryption_key.parent_key).to eq(parent_key)

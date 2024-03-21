@@ -44,12 +44,5 @@
       = link_to 'Edit', edit_demo_user_path(@user), class: 'btn btn-primary btn-sm'
 .container.mt-4
   h3 = "Activities by #{@user.full_name}" 
-  table.table 
-    thead
-      tr
-        th Info 
-        th Attributes
-        th Actions
-    tbody
-      - @loggable_activities.each do |activity|
-        = render_activity(activity)
+  
+  == render 'demo/activity_logs/index', loggable_activities: @loggable_activities

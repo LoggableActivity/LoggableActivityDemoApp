@@ -19,12 +19,11 @@ Demo::City:
         - street
         - postal_code
     - has_many: :users
-      route: show_demo_city_address
+      route: show_user
       model: User
       loggable_attrs:
         - first_name
         - last_name
-
 User: 
   fetch_record_name_from: full_name
   route: show_user
@@ -67,16 +66,7 @@ Demo::Address:
     - create
     - update
     - destroy
-Demo::Product:
-  loggable_attrs:
-    - name
-    - description
-    - price
-    - part_number
-  auto_log:
-    - create
-    - update
-    - destroy
+
 Demo::Club: 
   fetch_record_name_from: name 
   route: show_demo_club

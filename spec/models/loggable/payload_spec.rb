@@ -9,7 +9,7 @@ RSpec.describe LoggableActivity::Payload, type: :model do
     it 'is valid with valid attributes and a valid activity' do
       record = FactoryBot.create(:user)
       encrypted_attrs = { key: 'value' }.to_json
-      payload = LoggableActivity::Payload.new(uuid: Faker::Internet.uuid, record:, encrypted_attrs:, activity:)
+      payload = LoggableActivity::Payload.new(record:, encrypted_attrs:, activity:)
       expect(payload).to be_valid
     end
 

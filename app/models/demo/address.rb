@@ -5,7 +5,7 @@ module Demo
     include LoggableActivity::Hooks
     has_many :users, foreign_key: :demo_address_id, dependent: :nullify
     has_many :clubs, foreign_key: :demo_address_id, dependent: :nullify
-    belongs_to :demo_city, class_name: 'Demo::City', inverse_of: :demo_addresses, optional: true 
+    belongs_to :demo_city, class_name: 'Demo::City', inverse_of: :demo_addresses, optional: true
 
     # validates :demo_city, presence: true
     validates :street, presence: true
