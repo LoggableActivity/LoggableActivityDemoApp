@@ -15,7 +15,7 @@ module LoggableActivity
     def format_json_for_display(hash_data)
       JSON.pretty_generate(hash_data)
     rescue JSON::ParserError
-      hash_data.to_s 
+      hash_data.to_s
     end
   end
 end
