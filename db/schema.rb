@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_19_150115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,8 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
     t.string "action"
     t.string "actor_type"
     t.bigint "actor_id"
-    t.string "encrypted_actor_display_name"
-    t.string "encrypted_record_display_name"
+    t.string "encrypted_actor_name"
     t.string "record_type"
     t.bigint "record_id"
     t.datetime "created_at", null: false
@@ -67,26 +66,34 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
     t.index ["record_type", "record_id"], name: "index_loggable_activities_on_record"
   end
 
-  create_table "loggable_encryption_keys", force: :cascade do |t|
-    t.bigint "parent_key_id"
-    t.string "key"
+  create_table "loggable_data_owners", force: :cascade do |t|
     t.string "record_type"
     t.bigint "record_id"
-    t.index ["parent_key_id"], name: "index_loggable_encryption_keys_on_parent_key_id"
+    t.bigint "encryption_key_id", null: false
+    t.index ["encryption_key_id"], name: "index_loggable_data_owners_on_encryption_key_id"
+    t.index ["record_type", "record_id"], name: "index_loggable_data_owners_on_record"
+  end
+
+  create_table "loggable_encryption_keys", force: :cascade do |t|
+    t.string "record_type"
+    t.bigint "record_id"
+    t.string "secret_key"
     t.index ["record_type", "record_id"], name: "index_loggable_encryption_keys_on_record"
   end
 
   create_table "loggable_payloads", force: :cascade do |t|
+    t.bigint "activity_id", null: false
+    t.bigint "encryption_key_id", null: false
     t.string "record_type"
     t.bigint "record_id"
+    t.string "encrypted_record_name"
     t.json "encrypted_attrs"
-    t.integer "payload_type", default: 0
+    t.integer "related_to_activity_as", default: 0
     t.boolean "data_owner", default: false
     t.string "route"
-    t.bigint "activity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean "current_payload", default: true
     t.index ["activity_id"], name: "index_loggable_payloads_on_activity_id"
+    t.index ["encryption_key_id"], name: "index_loggable_payloads_on_encryption_key_id"
     t.index ["record_type", "record_id"], name: "index_loggable_payloads_on_record"
   end
 
@@ -116,8 +123,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_105933) do
   add_foreign_key "demo_journals", "users", column: "doctor_id"
   add_foreign_key "demo_journals", "users", column: "patient_id"
   add_foreign_key "demo_user_profiles", "users"
-  add_foreign_key "loggable_encryption_keys", "loggable_encryption_keys", column: "parent_key_id", on_delete: :nullify
+  add_foreign_key "loggable_data_owners", "loggable_encryption_keys", column: "encryption_key_id"
   add_foreign_key "loggable_payloads", "loggable_activities", column: "activity_id"
+  add_foreign_key "loggable_payloads", "loggable_encryption_keys", column: "encryption_key_id"
   add_foreign_key "users", "demo_addresses"
   add_foreign_key "users", "demo_addresses", column: "address_id"
   add_foreign_key "users", "demo_clubs"

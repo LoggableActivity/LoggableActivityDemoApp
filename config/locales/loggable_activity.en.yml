@@ -1,7 +1,7 @@
 en:
   loggable:
     activity:
-      deleted: "***** DELETED *****"
+      deleted: "*** Deleted ***"
       demo/address:
         update: An address was updated
         create: An address was created
@@ -12,6 +12,11 @@ en:
         create: A club was created
         show: A club was shown
         destroy: A club was deleted
+      demo/city:
+        update: A city was updated
+        create: A city was created
+        show: A city was shown
+        destroy: A city was deleted
       demo/journal:
         update: A journal was updated
         create: A journal was created

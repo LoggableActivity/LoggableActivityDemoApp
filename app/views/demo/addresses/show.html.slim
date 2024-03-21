@@ -14,4 +14,6 @@
           strong Postal code:
           span.float-end = @address.postal_code
         li.list-group-item
+
           = link_to 'Edit', edit_demo_city_demo_address_path(@address.demo_city, @address), class: 'btn btn-primary btn-sm'
+          =< link_to 'Delete', demo_city_demo_address_path(@address.demo_city, @address), data: { turmo_method: :delete, turbo_confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm'

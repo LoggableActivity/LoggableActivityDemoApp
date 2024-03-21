@@ -1,11 +1,4 @@
-.container
-  h1 Activities 
-  table.table 
-    thead
-      tr
-        th Info 
-        th Attributes
-        th Actions
-    tbody
-      - @loggable_activities.each do |activity|
-        = render_activity(activity)
+.container 
+  h1 Activities
+  p Click an activity to see more details
+  == render 'demo/activity_logs/index', loggable_activities: @loggable_activities

@@ -1,10 +1,7 @@
-b.text-secondary = payload_type_text_or_link(update_attrs)
-br/
-
-- if update_attrs[:attrs] == :deleted
+- if changes == :deleted
   = t('loggable.activity.deleted') 
 - else
-  - update_attrs[:attrs].each do |attr|
+  - changes.each do |attr|
     - attr.each do |key, from_to|
       - next if from_to.nil?
       i = key

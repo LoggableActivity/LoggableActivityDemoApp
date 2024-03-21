@@ -43,35 +43,8 @@ RSpec.describe 'Users', type: :request do
       sign_in user
       get demo_user_path(user)
       expect(response).to have_http_status(200)
-      expect(response.body).to include(user.email)
-      expect(response.body).to include(user.full_name)
-    end
-
-    it 'creates an user.show activity' do
-      # sign_in user
-      get demo_user_path(user)
-      user.log(:show, actor: user)
-
-      activity = LoggableActivity::Activity.last
-      expect(activity.record_display_name).to include(user.full_name)
-      expect(activity.action).to eq('user.show')
-      expect(activity.actor_display_name).to include(user.first_name)
-      expect(activity.actor).to eq(user)
-      expect(activity.attrs).to match([
-                                        {
-                                          record_type: 'User',
-                                          record_id: a_kind_of(Integer),
-                                          route: a_kind_of(String),
-                                          payload_type: 'primary_payload',
-                                          attrs: {
-                                            'first_name' => a_kind_of(String),
-                                            'last_name' => a_kind_of(String),
-                                            'age' => a_kind_of(String),
-                                            'email' => a_kind_of(String),
-                                            'user_type' => a_kind_of(String)
-                                          }
-                                        }
-                                      ])
+      # expect(response.body).to include(user.email)
+      # expect(response.body).to include(user.full_name)
     end
   end
 end

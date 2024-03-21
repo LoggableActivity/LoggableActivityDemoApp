@@ -5,7 +5,7 @@ module Demo
     before_action :authenticate_user!
 
     def show
-      @loggable_activity = LoggableActivity::Activity.find(params[:id])
+      # @loggable_activity = LoggableActivity::Activity.find(params[:id])
     end
 
     def index

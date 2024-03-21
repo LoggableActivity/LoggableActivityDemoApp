@@ -39,3 +39,8 @@ gem 'loggable_activity', '~> x.x.x', path: '/THE_LOCATION_OF_THE_GEM/LoggableAct
 $ gem build loggable_activity.gemspec
 ```
 Now you can run your changes to the gem in the this demo project.
+
+## debugging
+This can be solved by the use of our new debugging tool Ruby Debugger which is built-in to Rails 7.
+In order to debug processes, you now have to launch `bundle exec rdbg -a` in a different terminal after launching our server with `bin/dev`.
+This will allow the Ruby Debugger to connect to our Rails Server as a remote process, and all debugger break points will be handled there.

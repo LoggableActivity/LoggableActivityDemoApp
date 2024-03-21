@@ -1,4 +1,9 @@
 .container
   h1 Edit Address
-  == render 'form', demo_city: @city, demo_address: @address
+  - if @city
+    = form_for([@city, @address], html: { class: 'form-horizontal' }) do |f|
+      = render 'form', demo_city: @city, demo_address: @address, f: f
+  - else
+    = form_for( [@address], html: { class: 'form-horizontal' }) do |f|
+      = render 'form', demo_city: @city, demo_address: @address, f: f
 

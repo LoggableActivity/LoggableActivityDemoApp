@@ -1,6 +1,8 @@
+fetch_current_user_name_from: full_name
+current_user_model_name: User
 Demo::City:
   route: show_demo_city
-  record_display_name: name
+  fetch_record_name_from: name
   loggable_attrs:
     - name
     - country
@@ -10,21 +12,20 @@ Demo::City:
     - destroy
   relations:
     - has_many: :demo_addresses
-      record_display_name: full_address
+      fetch_record_name_from: full_address
       route: show_demo_city_demo_address 
       model: Demo::Address
       loggable_attrs:
         - street
         - postal_code
     - has_many: :users
-      route: show_demo_city_address
+      route: show_user
       model: User
       loggable_attrs:
         - first_name
         - last_name
-
 User: 
-  record_display_name: full_name
+  fetch_record_name_from: full_name
   route: show_user
   loggable_attrs: 
     - first_name
@@ -55,7 +56,7 @@ User:
       loggable_attrs:
         - name
 Demo::Address: 
-  record_display_name: full_address
+  fetch_record_name_from: full_address
   route: show_demo_address
   actor_display_name: email
   loggable_attrs:
@@ -65,18 +66,9 @@ Demo::Address:
     - create
     - update
     - destroy
-Demo::Product:
-  loggable_attrs:
-    - name
-    - description
-    - price
-    - part_number
-  auto_log:
-    - create
-    - update
-    - destroy
+
 Demo::Club: 
-  record_display_name: name 
+  fetch_record_name_from: name 
   route: show_demo_club
   loggable_attrs: 
     - name
@@ -91,7 +83,7 @@ Demo::Club:
         - street
         - postal_code
 Demo::Journal: 
-  record_display_name: title 
+  fetch_record_name_from: title 
   route: show_demo_journal
   loggable_attrs: 
     - title 
