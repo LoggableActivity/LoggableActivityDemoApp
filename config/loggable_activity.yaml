@@ -1,7 +1,7 @@
 fetch_current_user_name_from: full_name
 current_user_model_name: User
 Demo::City:
-  route: show_demo_city
+  route: /demo/cities/:id
   fetch_record_name_from: name
   loggable_attrs:
     - name
@@ -26,7 +26,7 @@ Demo::City:
         - last_name
 User: 
   fetch_record_name_from: full_name
-  route: show_user
+  route: /demo/users/:id
   loggable_attrs: 
     - first_name
     - last_name 
@@ -57,7 +57,7 @@ User:
         - name
 Demo::Address: 
   fetch_record_name_from: full_address
-  route: show_demo_address
+  route: /demo/addresses/:id
   actor_display_name: email
   loggable_attrs:
     - street
@@ -69,7 +69,7 @@ Demo::Address:
 
 Demo::Club: 
   fetch_record_name_from: name 
-  route: show_demo_club
+  route: /demo/clubs/:id
   loggable_attrs: 
     - name
   auto_log:
@@ -84,7 +84,7 @@ Demo::Club:
         - postal_code
 Demo::Journal: 
   fetch_record_name_from: title 
-  route: show_demo_journal
+  route: demo/journals/:id
   loggable_attrs: 
     - title 
     - body
@@ -114,7 +114,6 @@ Demo::Journal:
         - age 
         - user_type
 Demo::UserProfile: 
-  route: show_user
   loggable_attrs:
     - sex
     - religion

@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_19_150115) do
     t.string "record_type"
     t.bigint "record_id"
     t.string "secret_key"
+    t.datetime "delete_at"
     t.index ["record_type", "record_id"], name: "index_loggable_encryption_keys_on_record"
   end
 
