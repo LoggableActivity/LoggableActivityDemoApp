@@ -1,3 +1,5 @@
+## [0.2.1b]
+- Update links to github
 ## [Unreleased]
 - nothing so far
 ## [0.1.56] - 2024-02-12
