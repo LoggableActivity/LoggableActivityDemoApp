@@ -1,3 +1,5 @@
+## [0.2.1c]
+- Removed awesome print 
 ## [0.2.1b]
 - Update links to github
 ## [Unreleased]
