@@ -25,7 +25,5 @@ module DemoApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.loggable_activity = ActiveSupport::OrderedOptions.new
-    LoggableActivity::Configuration.load_config_file('config/loggable_activity.yaml')
   end
 end

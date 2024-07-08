@@ -54,8 +54,8 @@ gem 'slim-rails'
 # Use Devise for authentication
 gem 'devise', '~> 4.9.3'
 
-# gem 'loggable_activity', '~> 0.2.1c', path: '/Users/maxgronlund/Documents/Max/open-source/LoggableActivity'
-gem 'loggable_activity', '~> 0.2.1c'
+gem 'loggable_activity', '~> 0.5.0', path: '/Users/maxgronlund/Documents/Max/open-source/LoggableActivityEngine/LoggableActivityEngine'
+# gem 'loggable_activity', '~> 0.3.1'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -65,6 +65,7 @@ gem 'sentry-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'awesome_print'
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'debug', platforms: %i[mri windows]
