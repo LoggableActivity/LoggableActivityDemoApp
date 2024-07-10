@@ -2,12 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'home/index.html.slim', type: :view do
+RSpec.describe 'home/index.html.slim' do
   context 'when user is signed in' do
     before do
-      user = instance_double('User', email: 'user@example.com')
-      allow(view).to receive(:user_signed_in?).and_return(true)
-      allow(view).to receive(:current_user).and_return(user)
+      user = instance_double(User, email: 'user@example.com')
+      allow(view).to receive_messages(user_signed_in?: true, current_user: user)
     end
 
     it 'displays a sign out link and the user email' do

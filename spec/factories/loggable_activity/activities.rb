@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :loggable_activity, class: 'LoggableActivity::Activity' do
     action { 'some_model.some_action' }
-    association :actor, factory: :user
+    actor factory: %i[user]
   end
 end

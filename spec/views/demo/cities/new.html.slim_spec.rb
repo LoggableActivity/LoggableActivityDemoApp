@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'demo/cities/new', type: :view do
-  before(:each) do
+RSpec.describe 'demo/cities/new' do
+  before do
     assign(:demo_city, Demo::City.new(
                          name: 'MyString'
                        ))

@@ -1,9 +1,21 @@
+# List of extensions to load
+require:
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
 AllCops:
   # TargetRubyVersion: '3.0.1'
   NewCops: enable
   Exclude:
     - 'db/schema.rb'
     - 'vendor/**/*'
+    - 'spec/**/*'
+
+Rails/I18nLocaleTexts:
+    Enabled: false 
 
 Style/Documentation:
   Enabled: false
@@ -33,4 +45,4 @@ Metrics/AbcSize:
   Exclude:
     - lib/loggable_activity/encryption.rb
     - lib/loggable_activity/update_payloads_builder.rb
-    - db/migrate/20240319150115_create_loggable_activities.rb
+    - db/migrate/*_loggable_activity_tables.loggable_activity.rb

@@ -2,24 +2,24 @@
 
 require 'rails_helper'
 
-RSpec.describe LoggableActivity::Activity, type: :model do
+RSpec.describe LoggableActivity::Activity do
   describe 'validations' do
     it 'is invalid without actor' do
-      activity = LoggableActivity::Activity.new
+      activity = described_class.new
       expect(activity).not_to be_valid
       expect(activity.errors[:actor]).to include("can't be blank")
     end
 
     it 'is invalid without at least one payload' do
-      actor = FactoryBot.create(:user)
-      activity = LoggableActivity::Activity.new(actor:)
+      actor = create(:user)
+      activity = described_class.new(actor:)
       expect(activity).not_to be_valid
       expect(activity.errors[:payloads]).to include('must have at least one payload')
     end
 
     it 'is valid with actor and at least one payload' do
-      actor = FactoryBot.create(:user)
-      activity = FactoryBot.build(:loggable_activity, actor:)
+      actor = create(:user)
+      activity = build(:loggable_activity, actor:)
 
       payload_attrs = { record: actor, encrypted_attrs: { fo: 'bar' }.to_json }
       activity.payloads.build(payload_attrs)

@@ -7,6 +7,8 @@ class CreateDemoUserProfiles < ActiveRecord::Migration[7.1]
       t.string :religion
       # t.references :user
       t.belongs_to :user, index: { unique: true }, foreign_key: true
+
+      t.timestamps
     end
     # add_foreign_key :demo_user_profiles, :users, column: :user_id
   end

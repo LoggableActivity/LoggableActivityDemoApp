@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   # Test for valid factory
   it 'has a valid factory' do
     expect(build(:user)).to be_valid
@@ -10,18 +10,18 @@ RSpec.describe User, type: :model do
 
   # Test validations
   it 'is valid with a email and password' do
-    user = User.new(email: 'test@example.com', password: 'password123', password_confirmation: 'password123')
+    user = described_class.new(email: 'test@example.com', password: 'password123', password_confirmation: 'password123')
     expect(user).to be_valid
   end
 
   it 'is invalid without an email' do
-    user = User.new(email: nil)
+    user = described_class.new(email: nil)
     user.valid?
     expect(user.errors[:email]).to include("can't be blank")
   end
 
   it 'is invalid without a password' do
-    user = User.new(password: nil)
+    user = described_class.new(password: nil)
     user.valid?
     expect(user.errors[:password]).to include("can't be blank")
   end

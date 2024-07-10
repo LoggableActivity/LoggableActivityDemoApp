@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :loggable_encryption_key, class: 'LoggableActivity::EncryptionKey' do
-    association :record, factory: :user
+    record factory: %i[user]
     # record_type { 'Demo::Addredd' }
     # record_id { SecureRandom.uuid }
     # parent_key { SecureRandom.uuid }

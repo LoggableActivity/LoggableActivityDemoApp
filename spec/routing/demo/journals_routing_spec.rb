@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Demo::JournalsController, type: :routing do
+RSpec.describe Demo::JournalsController do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/demo/journals').to route_to('demo/journals#index')

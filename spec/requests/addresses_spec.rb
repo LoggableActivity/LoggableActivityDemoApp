@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Demo::Adress', type: :request do
+RSpec.describe 'Demo::Adress' do
   describe 'GET /demo/addresses' do
     let(:user) { create(:user) }
 
@@ -11,7 +11,7 @@ RSpec.describe 'Demo::Adress', type: :request do
       Thread.current[:current_user] = user
       create_list(:demo_address, 5)
       get demo_addresses_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 

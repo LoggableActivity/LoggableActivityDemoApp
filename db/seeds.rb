@@ -9,7 +9,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-puts '-------------------- Seeding data ---------------------'
+Rails.logger.debug '-------------------- Seeding data ---------------------'
 
 LoggableActivity::EncryptionKey.destroy_all
 
@@ -270,4 +270,4 @@ journals.each do |journal|
   Demo::Journal.create!(journal)
 end
 
-puts '------------------ Seeding data done -------------------'
+Rails.logger.debug '------------------ Seeding data done -------------------'

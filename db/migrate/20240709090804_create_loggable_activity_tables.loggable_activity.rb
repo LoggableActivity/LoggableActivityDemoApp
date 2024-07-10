@@ -27,9 +27,9 @@ class CreateLoggableActivityTables < ActiveRecord::Migration[7.1]
       t.string :encrypted_record_name
       t.json :encrypted_attrs
       t.integer :related_to_activity_as, default: 0
-      t.boolean :data_owner, default: false
+      t.boolean :data_owner, default: false, null: false
       t.string :route
-      t.boolean :current_payload, default: true
+      t.boolean :current_payload, default: true, null: false
       t.json :public_attrs, default: {}
 
       t.timestamps

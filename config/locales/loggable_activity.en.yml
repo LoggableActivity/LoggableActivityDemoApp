@@ -1,51 +1,50 @@
 en:
-  loggable:
-    activity:
-      deleted: "*** Deleted ***"
-      demo/address:
-        update: An address was updated
-        create: An address was created
-        show: An address was shown
-        destroy: An address was deleted
-      demo/club:
-        update: A club was updated
-        create: A club was created
-        show: A club was shown
-        destroy: A club was deleted
-      demo/city:
-        update: A city was updated
-        create: A city was created
-        show: A city was shown
-        destroy: A city was deleted
-      demo/journal:
-        update: A journal was updated
-        create: A journal was created
-        show: A journal was shown
-        destroy: A journal was deleted
-      demo/product:
-        update: A product was updated
-        create: A product was created
-        show: A product was shown
-        destroy: A product was deleted
-      user:
-        update: A user was updated
-        create: A user was created
-        show: "A user was shown"
-        destroy: A user was deleted
-      models:
-        Demo::Address: Address
-        Demo::City: City
-        Demo::UserProfile: Profile
-        Demo::Club: Club
-        Demo::Journal: Journal
-        Demo/Product: Product
-        User: User
-      routes:
-        show_demo_address: Address
-        show_demo_club: Club 
-        show_demo_journal: Journal 
-        show_user: User
-        show_doctor: Doctor
-        show_patient: Patient
-        show_user_profile: Profile
-        
+  loggable_activity:
+    deleted: "*** Deleted ***"
+    demo/address:
+      update: An address was updated
+      create: An address was created
+      show: An address was shown
+      destroy: An address was deleted
+    demo/club:
+      update: A club was updated
+      create: A club was created
+      show: A club was shown
+      destroy: A club was deleted
+    demo/city:
+      update: A city was updated
+      create: A city was created
+      show: A city was shown
+      destroy: A city was deleted
+    demo/journal:
+      update: A journal was updated
+      create: A journal was created
+      show: A journal was shown
+      destroy: A journal was deleted
+    demo/product:
+      update: A product was updated
+      create: A product was created
+      show: A product was shown
+      destroy: A product was deleted
+    user:
+      update: A user was updated
+      create: A user was created
+      show: "A user was shown"
+      destroy: A user was deleted
+    models:
+      Demo::Address: Address
+      Demo::City: City
+      Demo::UserProfile: Profile
+      Demo::Club: Club
+      Demo::Journal: Journal
+      Demo/Product: Product
+      User: User
+    routes:
+      show_demo_address: Address
+      show_demo_club: Club 
+      show_demo_journal: Journal 
+      show_user: User
+      show_doctor: Doctor
+      show_patient: Patient
+      show_user_profile: Profile
+      

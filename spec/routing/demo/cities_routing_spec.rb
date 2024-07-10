@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Demo::CitiesController, type: :routing do
+RSpec.describe Demo::CitiesController do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/demo/cities').to route_to('demo/cities#index')

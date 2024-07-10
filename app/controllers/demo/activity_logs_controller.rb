@@ -4,12 +4,12 @@ module Demo
   class ActivityLogsController < ApplicationController
     before_action :authenticate_user!
 
-    def show
-      # @loggable_activity = LoggableActivity::Activity.find(params[:id])
-    end
-
     def index
       @loggable_activities = LoggableActivity::Activity.latest(50)
+    end
+
+    def show
+      # @loggable_activity = LoggableActivity::Activity.find(params[:id])
     end
 
     def destroy

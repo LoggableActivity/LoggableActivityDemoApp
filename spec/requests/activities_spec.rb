@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'LoggableActivty', type: :request do
-  describe 'GET demo/activity_logs, has an update_payload ' do
+RSpec.describe 'LoggableActivty' do
+  describe 'GET demo/activity_logs, has an update_payload' do
     let(:user) { create(:user, demo_address: create(:demo_address)) }
 
     it 'shows the the activity log' do

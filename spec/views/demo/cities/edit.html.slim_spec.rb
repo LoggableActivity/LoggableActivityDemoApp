@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'demo/cities/edit', type: :view do
+RSpec.describe 'demo/cities/edit' do
   let(:demo_city) do
     Demo::City.create!(
       name: 'Tokyo',
@@ -10,7 +10,7 @@ RSpec.describe 'demo/cities/edit', type: :view do
     )
   end
 
-  before(:each) do
+  before do
     assign(:demo_city, demo_city)
   end
 

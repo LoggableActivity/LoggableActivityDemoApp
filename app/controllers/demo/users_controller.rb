@@ -8,7 +8,7 @@ module Demo
     before_action :set_relations, only: %i[new edit]
 
     def index
-      @users = User.all.order(:first_name)
+      @users = User.order(:first_name)
     end
 
     def show

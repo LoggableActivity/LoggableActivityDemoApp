@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Demo::City, type: :model do
+RSpec.describe Demo::City do
   it 'has a valid factory' do
     expect(build(:demo_city)).to be_valid
   end

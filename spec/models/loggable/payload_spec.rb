@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe LoggableActivity::Payload, type: :model do
+RSpec.describe LoggableActivity::Payload do
   describe 'validations' do
     let(:activity) { build(:loggable_activity) }
 
     it 'is valid with valid attributes and a valid activity' do
-      record = FactoryBot.create(:user)
+      record = create(:user)
       encrypted_attrs = { key: 'value' }.to_json
-      payload = LoggableActivity::Payload.new(record:, encrypted_attrs:, activity:)
+      payload = described_class.new(record:, encrypted_attrs:, activity:)
       expect(payload).to be_valid
     end
 
@@ -21,8 +21,8 @@ RSpec.describe LoggableActivity::Payload, type: :model do
     # end
 
     it 'is invalid without attrs' do
-      record = FactoryBot.create(:user)
-      payload = LoggableActivity::Payload.new(record:, activity:)
+      record = create(:user)
+      payload = described_class.new(record:, activity:)
       payload.valid?
       expect(payload.errors[:encrypted_attrs]).to include("can't be blank")
     end
@@ -30,7 +30,7 @@ RSpec.describe LoggableActivity::Payload, type: :model do
 
   describe 'associations' do
     it 'belongs to an activity' do
-      payload = LoggableActivity::Payload.reflect_on_association(:activity)
+      payload = described_class.reflect_on_association(:activity)
       expect(payload.macro).to eq(:belongs_to)
     end
   end
