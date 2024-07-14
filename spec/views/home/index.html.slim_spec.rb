@@ -22,7 +22,7 @@ RSpec.describe 'home/index.html.slim' do
 
     it 'displays a sign in link' do
       render partial: 'shared/session'
-      expect(rendered).to have_link('Sign in', href: new_user_session_path, class: 'btn btn-outline-secondary')
+      expect(rendered).to have_link('Sign in', href: new_user_session_path, class: 'btn btn-outline-primary')
     end
   end
 end
