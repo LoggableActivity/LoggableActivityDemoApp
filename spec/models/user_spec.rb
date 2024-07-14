@@ -10,7 +10,13 @@ RSpec.describe User do
 
   # Test validations
   it 'is valid with a email and password' do
-    user = described_class.new(email: 'test@example.com', password: 'password123', password_confirmation: 'password123')
+    user = 
+      described_class.new(
+        email: 'test@example.com', 
+        password: 'password123', 
+        password_confirmation: 'password123',
+        first_name: 'John',
+        last_name: 'Doe')
     expect(user).to be_valid
   end
 
