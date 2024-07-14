@@ -1,4 +1,4 @@
-current_user_name: full_name
+fetch_actor_name_from: full_name
 Demo::City:
   route: /demo/cities/:id
   fetch_record_name_from: name
