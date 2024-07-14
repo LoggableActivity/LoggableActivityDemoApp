@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_one :demo_user_profile, class_name: 'Demo::UserProfile', dependent: :destroy
   accepts_nested_attributes_for :demo_user_profile
   enum user_type: { Patient: 0, Doctor: 1, Admin: 2 }
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
   def full_name
     "#{first_name} #{last_name}"
