@@ -1,4 +1,3 @@
-fetch_actor_name_from: full_name
 Demo::City:
   route: /demo/cities/:id
   fetch_record_name_from: name
@@ -69,8 +68,6 @@ Demo::Address:
   loggable_attrs:
     - street
     - postal_code
-  public_attrs:
-    - street
   auto_log:
     - create
     - update
@@ -79,8 +76,6 @@ Demo::Club:
   fetch_record_name_from: name 
   route: /demo/clubs/:id
   loggable_attrs: 
-    - name
-  public_attrs:
     - name
   auto_log:
     - create
@@ -92,8 +87,6 @@ Demo::Club:
       loggable_attrs:
         - street
         - postal_code
-      public_attrs:
-        - street
 Demo::Journal: 
   fetch_record_name_from: title 
   route: demo/journals/:id
