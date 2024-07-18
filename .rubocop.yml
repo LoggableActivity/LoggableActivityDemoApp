@@ -47,3 +47,8 @@ Metrics/AbcSize:
     - lib/loggable_activity/encryption.rb
     - lib/loggable_activity/update_payloads_builder.rb
     - db/migrate/*_loggable_activity_tables.loggable_activity.rb
+    - 'db/migrate/20240716134137_create_loggable_activities.rb'
+
+Rails/ThreeStateBooleanColumn:
+  Exclude:
+    - 'db/migrate/20240716134137_create_loggable_activities.rb'
