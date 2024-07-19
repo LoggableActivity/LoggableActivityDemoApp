@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_09_090804) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_16_134137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,9 +100,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_090804) do
     t.string "encrypted_record_name"
     t.json "encrypted_attrs"
     t.integer "related_to_activity_as", default: 0
-    t.boolean "data_owner", default: false, null: false
+    t.boolean "data_owner", default: false
     t.string "route"
-    t.boolean "current_payload", default: true, null: false
+    t.boolean "current_payload", default: true
     t.json "public_attrs", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
