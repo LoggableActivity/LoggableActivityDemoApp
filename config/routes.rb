@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   mount LoggableActivity::Engine => '/loggable_activity'
   # devise_for :users
   Rails.application.routes.draw do
-    devise_for :user, controllers: {
-      sessions: 'user/sessions'
+    devise_for :users, controllers: {
+      sessions: 'users/sessions'
     }
   end
   get 'home/index'
