@@ -32,8 +32,8 @@ en:
       show: "A user was shown"
       destroy: A user was deleted
       sign_up: A user signed up
-      log_in: A user logged in
-      log_out: A user logged out
+      login: A user logged in
+      logout: A user logged out
     models:
       Demo::Address: Address
       Demo::City: City
