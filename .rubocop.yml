@@ -55,4 +55,4 @@ Rails/ThreeStateBooleanColumn:
 
 Rails/Output:
   Exclude:
-    - 'db/seeds.rb'
+    - 'db/seeds.rb'git 
