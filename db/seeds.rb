@@ -56,7 +56,6 @@ clubs = [
   { name: 'Nebula Nightfall Bar', demo_address_id: Demo::Address.fourth.id }
 ]
 
-
 clubs.each do |club|
   Demo::Club.find_or_create_by!(club)
 end
@@ -208,11 +207,10 @@ users = [
   }
 ]
 
-
 # LoggableActivity.disable!
 users.each do |user|
   next if User.find_by(email: user[:email]).present?
- 
+
   User.create!(user)
 end
 # LoggableActivity.enable!
@@ -268,7 +266,6 @@ journals = [
     state: 'pending'
   }
 ]
-
 
 journals.each do |journal|
   Demo::Journal.create!(journal)

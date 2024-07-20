@@ -52,3 +52,7 @@ Metrics/AbcSize:
 Rails/ThreeStateBooleanColumn:
   Exclude:
     - 'db/migrate/20240716134137_create_loggable_activities.rb'
+
+Rails/Output:
+  Exclude:
+    - 'db/seeds.rb'
