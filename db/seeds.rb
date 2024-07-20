@@ -9,13 +9,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-Rails.logger.debug '-------------------- Seeding data ---------------------'
+puts '-------------------- Seeding data ---------------------'
 
+LoggableActivity::Activity.destroy_all
 LoggableActivity::EncryptionKey.destroy_all
-
+Demo::Club.destroy_all
+User.destroy_all
 Demo::City.destroy_all
 Demo::Address.destroy_all
-
+Demo::Journal.destroy_all
 cities = [
   { name: 'Jukkasjärvi', country: 'Sweden', demo_addresses_attributes: [{ street: 'Ice Hotel, Marknadsvägen 63', postal_code: '981 91' }] },
   { name: 'Versailles', country: 'France', demo_addresses_attributes: [{ street: 'The Palace of Versailles', postal_code: '78000' }] },
@@ -54,7 +56,7 @@ clubs = [
   { name: 'Nebula Nightfall Bar', demo_address_id: Demo::Address.fourth.id }
 ]
 
-Demo::Club.destroy_all
+
 clubs.each do |club|
   Demo::Club.find_or_create_by!(club)
 end
@@ -206,12 +208,14 @@ users = [
   }
 ]
 
-User.destroy_all
+
+# LoggableActivity.disable!
 users.each do |user|
   next if User.find_by(email: user[:email]).present?
-
+ 
   User.create!(user)
 end
+# LoggableActivity.enable!
 
 journals = [
   {
@@ -265,9 +269,9 @@ journals = [
   }
 ]
 
-Demo::Journal.destroy_all
+
 journals.each do |journal|
   Demo::Journal.create!(journal)
 end
 
-Rails.logger.debug '------------------ Seeding data done -------------------'
+puts '------------------ Seeding data done -------------------'

@@ -11,9 +11,11 @@ module Users
     # end
 
     # POST /resource
-    # def create
-    #   super
-    # end
+    def create
+      super do |resource|
+        resource.log(:sign_up, actor: resource)
+      end
+    end
 
     # GET /resource/edit
     # def edit
